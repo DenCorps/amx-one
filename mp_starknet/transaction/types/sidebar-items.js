@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["TransactionExecutionErrorWrapper","TxType"],"struct":["Event","Transaction"],"type":["MaxArraySize","TransactionExecutionResultWrapper"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["BlockHash","ContractClassHashes","ContractClasses","CurrentBlock","LastKnownEthBlock","Nonces","Pending","StorageView"]};
