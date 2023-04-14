@@ -9,7 +9,7 @@ pub trait Hasher {
     /// * `data` - The data to hash.
     /// # Returns
     /// The hash of the data.
-    fn hash(&self, data: &[u8]) -> [u8; 32];
+    fn hash(data: &[u8]) -> [u8; 32];
 }
 /// A trait for hashing with pedersen.
 pub trait CryptoHasher {

@@ -699,13 +699,16 @@ pub mod pallet {
                 protocol_version,
                 extra_data,
             ));
+            // Compute block hash.
+            let block_header_hash = T::SystemHash::hash(&block.header().encode());
+            let block_header_hash = H256::from_slice(&block_header_hash.as_ref()[..32]);
             // Save the current block.
             CurrentBlock::<T>::put(block.clone());
             // Save the block number <> hash mapping.
-            BlockHash::<T>::insert(block_number, block.header().hash());
+            BlockHash::<T>::insert(block_number, block_header_hash);
             Pending::<T>::kill();
 
-            let digest = DigestItem::Consensus(MADARA_ENGINE_ID, PostLog::BlockHash(block.header().hash()).encode());
+            let digest = DigestItem::Consensus(MADARA_ENGINE_ID, PostLog::BlockHash(block_header_hash).encode());
             frame_system::Pallet::<T>::deposit_log(digest);
         }
 
