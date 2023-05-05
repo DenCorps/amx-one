@@ -369,6 +369,65 @@
 <a href="#369" id="369">369</a>
 <a href="#370" id="370">370</a>
 <a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Starknet RPC server API implementation
 //!
 //! It uses the madara client and backend in order to answer queries.
@@ -386,8 +445,9 @@
 <span class="kw">use </span>log::error;
 <span class="kw">pub use </span>mc_rpc_core::StarknetRpcApiServer;
 <span class="kw">use </span>mc_rpc_core::{
-    to_rpc_contract_class, BlockHashAndNumber, BlockId <span class="kw">as </span>StarknetBlockId, ContractAddress, ContractClassHash,
-    FunctionCall, RPCContractClass, Syncing,
+    to_rpc_contract_class, BlockHashAndNumber, BlockId <span class="kw">as </span>StarknetBlockId, BlockStatus, BlockWithTxHashes,
+    ContractAddress, ContractClassHash, FieldElement, FunctionCall, MaybePendingBlockWithTxHashes, RPCContractClass,
+    Syncing,
 };
 <span class="kw">use </span>mc_storage::OverrideHandle;
 <span class="kw">use </span>pallet_starknet::runtime_api::StarknetRuntimeApi;
@@ -398,6 +458,7 @@
 <span class="kw">use </span>sp_blockchain::HeaderBackend;
 <span class="kw">use </span>sp_core::{H256, U256};
 <span class="kw">use </span>sp_runtime::traits::{Block <span class="kw">as </span>BlockT, Header <span class="kw">as </span>HeaderT};
+<span class="kw">use </span>starknet_api::hash::StarkFelt;
 
 <span class="doccomment">/// A Starknet RPC server for Madara
 </span><span class="kw">pub struct </span>Starknet&lt;B: BlockT, BE, C&gt; {
@@ -467,7 +528,7 @@
             StarknetBlockId::BlockHash(h) =&gt; madara_backend_client::load_hash(
                 <span class="self">self</span>.client.as_ref(),
                 <span class="kw-2">&amp;</span><span class="self">self</span>.backend,
-                H256::from_str(<span class="kw-2">&amp;</span>h).map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Failed to convert &#39;{h}&#39; to H256: {e}&quot;</span>))<span class="question-mark">?</span>,
+                H256::from_str(<span class="kw-2">&amp;</span>format_hex(<span class="kw-2">&amp;</span>h)).map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Failed to convert &#39;{h}&#39; to H256: {e}&quot;</span>))<span class="question-mark">?</span>,
             )
             .map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Failed to load Starknet block hash for Substrate block with hash &#39;{h}&#39;: {e}&quot;</span>))<span class="question-mark">?</span>,
             StarknetBlockId::BlockNumber(n) =&gt; <span class="self">self
@@ -545,11 +606,11 @@
                 <span class="kw">let </span>result = runtime_api
                     .call(
                         substrate_block_hash,
-                        &lt;[u8; <span class="number">32</span>]&gt;::from_hex(remove_prefix(<span class="kw-2">&amp;</span>request.contract_address)).map_err(|e| {
+                        &lt;[u8; <span class="number">32</span>]&gt;::from_hex(format_hex(<span class="kw-2">&amp;</span>request.contract_address)).map_err(|e| {
                             <span class="macro">error!</span>(<span class="string">&quot;Address: Failed to convert &#39;{0}&#39; to [u8; 32]: {e}&quot;</span>, request.contract_address);
                             StarknetRpcApiError::BlockNotFound
                         })<span class="question-mark">?</span>,
-                        string_to_h256(<span class="kw-2">&amp;</span>request.entry_point_selector).map_err(|e| {
+                        H256::from_str(<span class="kw-2">&amp;</span>format_hex(<span class="kw-2">&amp;</span>request.entry_point_selector)).map_err(|e| {
                             <span class="macro">error!</span>(<span class="string">&quot;Entrypoint: Failed to convert &#39;{0}&#39; to H256: {e}&quot;</span>, request.entry_point_selector);
                             StarknetRpcApiError::BlockNotFound
                         })<span class="question-mark">?</span>,
@@ -580,7 +641,7 @@
             StarknetRpcApiError::BlockNotFound
         })<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>contract_address_wrapped = &lt;[u8; <span class="number">32</span>]&gt;::from_hex(remove_prefix(<span class="kw-2">&amp;</span>contract_address)).map_err(|e| {
+        <span class="kw">let </span>contract_address_wrapped = &lt;[u8; <span class="number">32</span>]&gt;::from_hex(format_hex(<span class="kw-2">&amp;</span>contract_address)).map_err(|e| {
             <span class="macro">error!</span>(<span class="string">&quot;Failed to convert &#39;{contract_address}&#39; to array: {e}&quot;</span>);
             StarknetRpcApiError::ContractNotFound
         })<span class="question-mark">?</span>;
@@ -673,7 +734,7 @@
             StarknetRpcApiError::BlockNotFound
         })<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>contract_clash_hashed_wrapped = &lt;[u8; <span class="number">32</span>]&gt;::from_hex(remove_prefix(<span class="kw-2">&amp;</span>class_hash)).map_err(|e| {
+        <span class="kw">let </span>contract_clash_hashed_wrapped = &lt;[u8; <span class="number">32</span>]&gt;::from_hex(format_hex(<span class="kw-2">&amp;</span>class_hash)).map_err(|e| {
             <span class="macro">error!</span>(<span class="string">&quot;Failed to convert &#39;{class_hash}&#39; to array: {e}&quot;</span>);
             StarknetRpcApiError::ContractNotFound
         })<span class="question-mark">?</span>;
@@ -692,53 +753,110 @@
             StarknetRpcApiError::ContractNotFound
         })<span class="question-mark">?</span>)
     }
-}
 
-<span class="doccomment">/// Removes the &quot;0x&quot; prefix from a given hexadecimal string
-</span><span class="kw">fn </span>remove_prefix(input: <span class="kw-2">&amp;</span>str) -&gt; <span class="kw-2">&amp;</span>str {
-    input.strip_prefix(<span class="string">&quot;0x&quot;</span>).unwrap_or(input)
-}
+    <span class="doccomment">/// Get the contract class hash in the given block for the contract deployed at the given
+    /// address
+    ///
+    /// # Arguments
+    ///
+    /// * `block_id` - The hash of the requested block, or number (height) of the requested block,
+    ///   or a block tag
+    /// * `contract_address` - The address of the contract whose class hash will be returned
+    ///
+    /// # Returns
+    ///
+    /// * `class_hash` - The class hash of the given contract
+    </span><span class="kw">fn </span>get_class_hash_at(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        contract_address: ContractAddress,
+        block_id: StarknetBlockId,
+    ) -&gt; RpcResult&lt;FieldElement&gt; {
+        <span class="kw">let </span>substrate_block_hash = <span class="self">self</span>.substrate_block_hash_from_starknet_block(block_id).map_err(|e| {
+            <span class="macro">error!</span>(<span class="string">&quot;&#39;{e}&#39;&quot;</span>);
+            StarknetRpcApiError::BlockNotFound
+        })<span class="question-mark">?</span>;
 
-<span class="doccomment">/// Converts a hexadecimal string to an H256 value, padding with zero bytes on the left if necessary
-</span><span class="kw">fn </span>string_to_h256(hex_str: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;H256, String&gt; {
-    <span class="kw">let </span>hex_str = remove_prefix(hex_str);
-    <span class="kw">let </span><span class="kw-2">mut </span>padded_hex_str = hex_str.to_string();
-    <span class="kw">while </span>padded_hex_str.len() &lt; <span class="number">64 </span>{
-        padded_hex_str.insert(<span class="number">0</span>, <span class="string">&#39;0&#39;</span>);
+        <span class="kw">let </span>contract_address_wrapped = &lt;[u8; <span class="number">32</span>]&gt;::from_hex(format_hex(<span class="kw-2">&amp;</span>contract_address)).map_err(|e| {
+            <span class="macro">error!</span>(<span class="string">&quot;Failed to convert &#39;{contract_address}&#39; to array: {e}&quot;</span>);
+            StarknetRpcApiError::ContractNotFound
+        })<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>class_hash = <span class="self">self
+            </span>.overrides
+            .for_block_hash(<span class="self">self</span>.client.as_ref(), substrate_block_hash)
+            .contract_class_hash_by_address(substrate_block_hash, contract_address_wrapped)
+            .ok_or_else(|| {
+                <span class="macro">error!</span>(<span class="string">&quot;Failed to retrieve contract class hash at &#39;{contract_address}&#39;&quot;</span>);
+                StarknetRpcApiError::ContractNotFound
+            })<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(StarkFelt::new(class_hash)
+            .map_err(|e| {
+                <span class="macro">error!</span>(<span class="string">&quot;Failed to convert contract class hash at &#39;{contract_address}&#39;: {e}&quot;</span>);
+                StarknetRpcApiError::ContractNotFound
+            })<span class="question-mark">?
+            </span>.to_string())
     }
-    <span class="kw">let </span>bytes =
-        Vec::from_hex(<span class="kw-2">&amp;</span>padded_hex_str).map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Failed to convert hex string to bytes: {:?}&quot;</span>, e))<span class="question-mark">?</span>;
-    <span class="prelude-val">Ok</span>(H256::from_slice(<span class="kw-2">&amp;</span>bytes))
+
+    <span class="doccomment">/// Returns the specified block with transaction hashes.
+    </span><span class="kw">fn </span>get_block_with_tx_hashes(<span class="kw-2">&amp;</span><span class="self">self</span>, block_id: StarknetBlockId) -&gt; RpcResult&lt;MaybePendingBlockWithTxHashes&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>block_status = BlockStatus::AcceptedOnL2;
+        <span class="kw">let </span>substrate_block_hash = <span class="kw">match </span>block_id {
+            StarknetBlockId::BlockHash(h) =&gt; madara_backend_client::load_hash(
+                <span class="self">self</span>.client.as_ref(),
+                <span class="kw-2">&amp;</span><span class="self">self</span>.backend,
+                H256::from_str(<span class="kw-2">&amp;</span>format_hex(<span class="kw-2">&amp;</span>h)).map_err(|e| {
+                    <span class="macro">error!</span>(<span class="string">&quot;Failed to convert &#39;{h}&#39; to H256: {e}&quot;</span>);
+                    StarknetRpcApiError::BlockNotFound
+                })<span class="question-mark">?</span>,
+            )
+            .map_err(|e| {
+                <span class="macro">error!</span>(<span class="string">&quot;Failed to load Starknet block hash for Substrate block with hash &#39;{h}&#39;: {e}&quot;</span>);
+                StarknetRpcApiError::BlockNotFound
+            })<span class="question-mark">?</span>,
+            StarknetBlockId::BlockNumber(n) =&gt; {
+                <span class="self">self</span>.client.hash(UniqueSaturatedInto::unique_saturated_into(n)).map_err(|e| {
+                    <span class="macro">error!</span>(<span class="string">&quot;Failed to retrieve the hash of block number &#39;{n}&#39;: {e}&quot;</span>);
+                    StarknetRpcApiError::BlockNotFound
+                })<span class="question-mark">?
+            </span>}
+            StarknetBlockId::BlockTag(t) =&gt; <span class="kw">match </span>t {
+                mc_rpc_core::BlockTag::Latest =&gt; <span class="prelude-val">Some</span>(<span class="self">self</span>.client.info().best_hash),
+                mc_rpc_core::BlockTag::Pending =&gt; {
+                    block_status = BlockStatus::Pending;
+                    <span class="prelude-val">None
+                </span>}
+            },
+        }
+        .ok_or(StarknetRpcApiError::BlockNotFound)<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>block = <span class="self">self
+            </span>.overrides
+            .for_block_hash(<span class="self">self</span>.client.as_ref(), substrate_block_hash)
+            .current_block(substrate_block_hash)
+            .unwrap_or_default();
+
+        <span class="kw">let </span>transaction_hashes = block.transactions_hashes().into_iter().map(|hash| hash.to_string()).collect();
+        <span class="kw">let </span>block_with_tx_hashes = BlockWithTxHashes {
+            transactions: transaction_hashes,
+            <span class="comment">// TODO: Status hardcoded, get status from block
+            </span>status: block_status,
+            block_hash: block.header().hash().to_string(),
+            parent_hash: block.header().parent_block_hash.to_string(),
+            block_number: block.header().block_number.as_u64(),
+            new_root: block.header().global_state_root.to_string(),
+            <span class="comment">// new_root: FieldElement::from(&quot;0x0&quot;),
+            </span>timestamp: block.header().block_timestamp,
+            sequencer_address: H256::from_slice(<span class="kw-2">&amp;</span>block.header().sequencer_address).to_string(),
+        };
+        <span class="prelude-val">Ok</span>(MaybePendingBlockWithTxHashes::Block(block_with_tx_hashes))
+    }
 }
 
-<span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
-
-    <span class="comment">// Test case for the string_to_h256 function
-    </span><span class="attr">#[test]
-    </span><span class="kw">fn </span>test_string_to_h256() {
-        <span class="comment">// Test case 1: Valid input with 64 characters
-        </span><span class="kw">let </span>hex_str_1 = <span class="string">&quot;0x0222882e457847df7ebaf981db2ff8ebb22c19d5b0a6a41dcc13cc2d775fbeb7&quot;</span>;
-        <span class="kw">let </span>expected_result_1 = H256::from_str(hex_str_1).unwrap();
-        <span class="macro">assert_eq!</span>(string_to_h256(hex_str_1).unwrap(), expected_result_1);
-
-        <span class="comment">// Test case 2: Input with leading zeros
-        </span><span class="kw">let </span>hex_str_2 = <span class="string">&quot;0x0123456789abcdef&quot;</span>;
-        <span class="kw">let </span>expected_result_2 =
-            H256::from_str(<span class="string">&quot;0x0000000000000000000000000000000000000000000000000123456789abcdef&quot;</span>).unwrap();
-        <span class="macro">assert_eq!</span>(string_to_h256(hex_str_2).unwrap(), expected_result_2);
-
-        <span class="comment">// Test case 3: Input with missing &quot;0x&quot; prefix
-        </span><span class="kw">let </span>hex_str_3 = <span class="string">&quot;222882e457847df7ebaf981db2ff8ebb22c19d5b0a6a41dcc13cc2d775fbeb7&quot;</span>;
-        <span class="kw">let </span>expected_result_3 =
-            H256::from_str(<span class="string">&quot;0x0222882e457847df7ebaf981db2ff8ebb22c19d5b0a6a41dcc13cc2d775fbeb7&quot;</span>).unwrap();
-        <span class="macro">assert_eq!</span>(string_to_h256(hex_str_3).unwrap(), expected_result_3);
-
-        <span class="comment">// Test case 4: Input with invalid length
-        </span><span class="kw">let </span>hex_str_4 = <span class="string">&quot;0x222882e457847df7ebaf981db2ff8ebb22c19d5b0a6a41dcc13cc2d775fbeb7111111&quot;</span>;
-        <span class="macro">assert!</span>(string_to_h256(hex_str_4).is_err());
-    }
+<span class="doccomment">/// Removes the &quot;0x&quot; prefix from a given hexadecimal string an pads it with 0s
+</span><span class="attr">#[inline(always)]
+</span><span class="kw">fn </span>format_hex(input: <span class="kw-2">&amp;</span>str) -&gt; String {
+    <span class="macro">format!</span>(<span class="string">&quot;{:0&gt;64}&quot;</span>, input.strip_prefix(<span class="string">&quot;0x&quot;</span>).unwrap_or(input))
 }
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mc_rpc" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (34e6673a0 2023-02-25)" data-search-js="search-14421e1532aead08.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
