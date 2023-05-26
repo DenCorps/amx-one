@@ -127,7 +127,6 @@
 <a href="#127" id="127">127</a>
 <a href="#128" id="128">128</a>
 <a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Starknet RPC API trait and types
 //!
 //! Starkware maintains [a description of the Starknet API](https://github.com/starkware-libs/starknet-specs/blob/master/api/starknet_api_openrpc.json)
@@ -139,16 +138,15 @@
 
 <span class="kw">use </span>jsonrpsee::core::RpcResult;
 <span class="kw">use </span>jsonrpsee::proc_macros::rpc;
-<span class="kw">use </span>mp_starknet::transaction::types::Transaction <span class="kw">as </span>MPTransaction;
 
 <span class="kw">pub mod </span>utils;
 
-<span class="kw">use </span>starknet_core::types::FieldElement;
-<span class="kw">use </span>starknet_providers::jsonrpc::models::{
+<span class="kw">use </span>starknet_core::types::{
     BlockHashAndNumber, BlockId, BroadcastedDeclareTransaction, BroadcastedDeployAccountTransaction,
     BroadcastedInvokeTransaction, BroadcastedTransaction, ContractClass, DeclareTransactionResult,
-    DeployAccountTransactionResult, EventFilter, EventsPage, FeeEstimate, FunctionCall, InvokeTransactionResult,
-    MaybePendingBlockWithTxHashes, MaybePendingBlockWithTxs, StateUpdate, SyncStatusType, Transaction,
+    DeployAccountTransactionResult, EventFilter, EventsPage, FeeEstimate, FieldElement, FunctionCall,
+    InvokeTransactionResult, MaybePendingBlockWithTxHashes, MaybePendingBlockWithTxs, StateUpdate, SyncStatusType,
+    Transaction,
 };
 
 <span class="doccomment">/// Starknet rpc interface.
@@ -204,6 +202,10 @@
     </span><span class="attr">#[method(name = <span class="string">&quot;getNonce&quot;</span>)]
     </span><span class="kw">fn </span>get_nonce(<span class="kw-2">&amp;</span><span class="self">self</span>, contract_address: FieldElement, block_id: BlockId) -&gt; RpcResult&lt;FieldElement&gt;;
 
+    <span class="doccomment">/// Get block information with full transactions given the block id
+    </span><span class="attr">#[method(name = <span class="string">&quot;getBlockWithTxs&quot;</span>)]
+    </span><span class="kw">fn </span>get_block_with_txs(<span class="kw-2">&amp;</span><span class="self">self</span>, block_id: BlockId) -&gt; RpcResult&lt;MaybePendingBlockWithTxs&gt;;
+
     <span class="doccomment">/// Get the chain id
     </span><span class="attr">#[method(name = <span class="string">&quot;chainId&quot;</span>)]
     </span><span class="kw">fn </span>chain_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RpcResult&lt;String&gt;;
@@ -222,21 +224,17 @@
         deploy_account_transaction: BroadcastedDeployAccountTransaction,
     ) -&gt; RpcResult&lt;DeployAccountTransactionResult&gt;;
 
+    <span class="doccomment">/// Estimate the fee associated with transaction
+    </span><span class="attr">#[method(name = <span class="string">&quot;estimateFee&quot;</span>)]
+    </span><span class="kw">async fn </span>estimate_fee(<span class="kw-2">&amp;</span><span class="self">self</span>, request: BroadcastedTransaction, block_id: BlockId) -&gt; RpcResult&lt;FeeEstimate&gt;;
+
     <span class="doccomment">/// Get the details of a transaction by a given block id and index
     </span><span class="attr">#[method(name = <span class="string">&quot;getTransactionByBlockIdAndIndex&quot;</span>)]
-    </span><span class="kw">fn </span>get_transaction_by_block_id_and_index(<span class="kw-2">&amp;</span><span class="self">self</span>, block_id: BlockId, index: usize) -&gt; RpcResult&lt;MPTransaction&gt;;
-
-    <span class="doccomment">/// Get block information with full transactions given the block id
-    </span><span class="attr">#[method(name = <span class="string">&quot;getBlockWithTxs&quot;</span>)]
-    </span><span class="kw">fn </span>get_block_with_txs(<span class="kw-2">&amp;</span><span class="self">self</span>, block_id: BlockId) -&gt; RpcResult&lt;MaybePendingBlockWithTxs&gt;;
+    </span><span class="kw">fn </span>get_transaction_by_block_id_and_index(<span class="kw-2">&amp;</span><span class="self">self</span>, block_id: BlockId, index: usize) -&gt; RpcResult&lt;Transaction&gt;;
 
     <span class="doccomment">/// Get the information about the result of executing the requested block
     </span><span class="attr">#[method(name = <span class="string">&quot;getStateUpdate&quot;</span>)]
     </span><span class="kw">fn </span>get_state_update(<span class="kw-2">&amp;</span><span class="self">self</span>, block_id: BlockId) -&gt; RpcResult&lt;StateUpdate&gt;;
-
-    <span class="doccomment">/// Estimate the fee for a given Starknet transaction
-    </span><span class="attr">#[method(name = <span class="string">&quot;estimateFee&quot;</span>)]
-    </span><span class="kw">async fn </span>estimate_fee(<span class="kw-2">&amp;</span><span class="self">self</span>, request: BroadcastedTransaction, block_id: BlockId) -&gt; RpcResult&lt;FeeEstimate&gt;;
 
     <span class="doccomment">/// Returns the transactions in the transaction pool, recognized by this sequencer
     </span><span class="attr">#[method(name = <span class="string">&quot;pendingTransactions&quot;</span>)]
