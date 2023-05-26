@@ -961,6 +961,9 @@
 <a href="#961" id="961">961</a>
 <a href="#962" id="962">962</a>
 <a href="#963" id="963">963</a>
+<a href="#964" id="964">964</a>
+<a href="#965" id="965">965</a>
+<a href="#966" id="966">966</a>
 </pre><pre class="rust"><code><span class="doccomment">//! A Substrate pallet implementation for Starknet, a decentralized, permissionless, and scalable
 //! zk-rollup for general-purpose smart contracts.
 //! See the [Starknet documentation](https://docs.starknet.io/) for more information.
@@ -1406,9 +1409,9 @@
                         events: BoundedVec::try_from(events).map_err(|<span class="kw">_</span>| Error::&lt;T&gt;::ReachedBoundedVecLimit)<span class="question-mark">?</span>,
                         transaction_hash: transaction.hash,
                         tx_type: TxType::Invoke,
-                        actual_fee: Felt252Wrapper(U256::from(actual_fee.<span class="number">0</span>)),
-                        block_hash: block.header().hash(T::SystemHash::hasher()).into(),
-                        block_number: block.header().block_number.as_u64(),
+                        actual_fee: actual_fee.<span class="number">0</span>.into(),
+                        block_hash: block.header().hash(T::SystemHash::hasher()), <span class="comment">// unwrap to check.
+                        </span>block_number: block.header().block_number.as_u64(),
                     }
                 }
                 <span class="prelude-val">Err</span>(e) =&gt; {
@@ -1495,9 +1498,9 @@
                         events: BoundedVec::try_from(events).map_err(|<span class="kw">_</span>| Error::&lt;T&gt;::ReachedBoundedVecLimit)<span class="question-mark">?</span>,
                         transaction_hash: transaction.hash,
                         tx_type: TxType::Declare,
-                        block_hash: block.header().hash(T::SystemHash::hasher()).into(),
+                        block_hash: block.header().hash(T::SystemHash::hasher()),
                         block_number: block.header().block_number.as_u64(),
-                        actual_fee: Felt252Wrapper(U256::from(actual_fee.<span class="number">0</span>)),
+                        actual_fee: actual_fee.<span class="number">0</span>.into(),
                     }
                 }
                 <span class="prelude-val">Err</span>(e) =&gt; {
@@ -1579,9 +1582,9 @@
                         events: BoundedVec::try_from(events).map_err(|<span class="kw">_</span>| Error::&lt;T&gt;::ReachedBoundedVecLimit)<span class="question-mark">?</span>,
                         transaction_hash: transaction.hash,
                         tx_type: TxType::DeployAccount,
-                        block_hash: block.header().hash(T::SystemHash::hasher()).into(),
+                        block_hash: block.header().hash(T::SystemHash::hasher()),
                         block_number: block.header().block_number.as_u64(),
-                        actual_fee: Felt252Wrapper(U256::from(actual_fee.<span class="number">0</span>)),
+                        actual_fee: actual_fee.<span class="number">0</span>.into(),
                     }
                 }
                 <span class="prelude-val">Err</span>(e) =&gt; {
@@ -1691,28 +1694,31 @@
         /// are being whitelisted and marked as valid.
         </span><span class="kw">fn </span>validate_unsigned(_source: TransactionSource, call: <span class="kw-2">&amp;</span><span class="self">Self</span>::Call) -&gt; TransactionValidity {
             <span class="comment">// TODO: Call `__validate__` entrypoint of the contract. #69
-
+            // The priority right now is the max u64 - nonce because for unsigned transactions we need to
+            // determine an absolute priority. For now we use that for the benchmark (lowest nonce goes first)
+            // otherwise we have a nonce error and everything fails.
+            // Once we have a real fee market this is where we&#39;ll chose the most profitable transaction.
             </span><span class="kw">match </span>call {
                 Call::invoke { transaction } =&gt; ValidTransaction::with_tag_prefix(<span class="string">&quot;starknet&quot;</span>)
-                    .priority(T::UnsignedPriority::get())
+                    .priority(u64::MAX - transaction.nonce.as_u64())
                     .and_provides((transaction.sender_address, transaction.nonce))
                     .longevity(<span class="number">64_u64</span>)
                     .propagate(<span class="bool-val">true</span>)
                     .build(),
                 Call::declare { transaction } =&gt; ValidTransaction::with_tag_prefix(<span class="string">&quot;starknet&quot;</span>)
-                    .priority(T::UnsignedPriority::get())
+                    .priority(u64::MAX - transaction.nonce.as_u64())
                     .and_provides((transaction.sender_address, transaction.nonce))
                     .longevity(<span class="number">64_u64</span>)
                     .propagate(<span class="bool-val">true</span>)
                     .build(),
                 Call::deploy_account { transaction } =&gt; ValidTransaction::with_tag_prefix(<span class="string">&quot;starknet&quot;</span>)
-                    .priority(T::UnsignedPriority::get())
+                    .priority(u64::MAX - transaction.nonce.as_u64())
                     .and_provides((transaction.sender_address, transaction.nonce))
                     .longevity(<span class="number">64_u64</span>)
                     .propagate(<span class="bool-val">true</span>)
                     .build(),
                 Call::consume_l1_message { transaction } =&gt; ValidTransaction::with_tag_prefix(<span class="string">&quot;starknet&quot;</span>)
-                    .priority(T::UnsignedPriority::get())
+                    .priority(u64::MAX - transaction.nonce.as_u64())
                     .and_provides((transaction.sender_address, transaction.nonce))
                     .longevity(<span class="number">64_u64</span>)
                     .propagate(<span class="bool-val">true</span>)
@@ -1732,7 +1738,7 @@
     /// The current block hash.
     </span><span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>current_block_hash() -&gt; Felt252Wrapper {
-        <span class="self">Self</span>::current_block().header().hash(T::SystemHash::hasher()).into()
+        <span class="self">Self</span>::current_block().header().hash(T::SystemHash::hasher())
     }
 
     <span class="doccomment">/// Get the block hash of the previous block.
@@ -1747,7 +1753,7 @@
     </span><span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>parent_block_hash(current_block_number: <span class="kw-2">&amp;</span>U256) -&gt; Felt252Wrapper {
         <span class="kw">if </span>current_block_number == <span class="kw-2">&amp;</span>U256::zero() {
-            Felt252Wrapper::zero()
+            Felt252Wrapper::ZERO
         } <span class="kw">else </span>{
             <span class="self">Self</span>::block_hash(current_block_number - <span class="number">1</span>)
         }
@@ -1800,7 +1806,7 @@
         <span class="kw">match </span>entrypoint.execute(<span class="kw-2">&amp;mut </span>BlockifierStateAdapter::&lt;T&gt;::default(), block, fee_token_address) {
             <span class="prelude-val">Ok</span>(v) =&gt; {
                 <span class="macro">log!</span>(debug, <span class="string">&quot;Transaction executed successfully: {:?}&quot;</span>, v);
-                <span class="kw">let </span>result = v.execution.retdata.<span class="number">0</span>.iter().map(|x| Felt252Wrapper(U256::from(x.<span class="number">0</span>))).collect();
+                <span class="kw">let </span>result = v.execution.retdata.<span class="number">0</span>.iter().map(|x| (<span class="kw-2">*</span>x).into()).collect();
                 <span class="prelude-val">Ok</span>(result)
             }
             <span class="prelude-val">Err</span>(e) =&gt; {
@@ -1830,7 +1836,7 @@
         </span><span class="kw">let </span>parent_block_hash = <span class="self">Self</span>::parent_block_hash(<span class="kw-2">&amp;</span>block_number);
         <span class="kw">let </span>pending = <span class="self">Self</span>::pending();
 
-        <span class="kw">let </span>global_state_root = Felt252Wrapper::zero();
+        <span class="kw">let </span>global_state_root = Felt252Wrapper::ZERO;
         <span class="comment">// TODO: use the real sequencer address (our own address)
         // FIXME #243
         </span><span class="kw">let </span>sequencer_address = SEQUENCER_ADDRESS;
@@ -1848,12 +1854,12 @@
                 parent_block_hash,
                 block_number,
                 global_state_root,
-                sequencer_address.into(),
+                Felt252Wrapper::try_from(<span class="kw-2">&amp;</span>sequencer_address).unwrap(),
                 block_timestamp,
                 transaction_count,
-                transaction_commitment.into(),
+                transaction_commitment.try_into().unwrap(),
                 events.len() <span class="kw">as </span>u128,
-                event_commitment.into(),
+                event_commitment.try_into().unwrap(),
                 protocol_version,
                 extra_data,
             ),
@@ -1864,7 +1870,7 @@
         <span class="comment">// Save the current block.
         </span>CurrentBlock::&lt;T&gt;::put(block.clone());
         <span class="comment">// Save the block number &lt;&gt; hash mapping.
-        </span><span class="kw">let </span>blockhash: Felt252Wrapper = block.header().hash(T::SystemHash::hasher()).into();
+        </span><span class="kw">let </span>blockhash = block.header().hash(T::SystemHash::hasher());
         BlockHash::&lt;T&gt;::insert(block_number, blockhash);
         Pending::&lt;T&gt;::kill();
         PendingEvents::&lt;T&gt;::kill();
