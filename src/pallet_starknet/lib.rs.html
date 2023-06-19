@@ -1029,91 +1029,6 @@
 <a href="#1029" id="1029">1029</a>
 <a href="#1030" id="1030">1030</a>
 <a href="#1031" id="1031">1031</a>
-<a href="#1032" id="1032">1032</a>
-<a href="#1033" id="1033">1033</a>
-<a href="#1034" id="1034">1034</a>
-<a href="#1035" id="1035">1035</a>
-<a href="#1036" id="1036">1036</a>
-<a href="#1037" id="1037">1037</a>
-<a href="#1038" id="1038">1038</a>
-<a href="#1039" id="1039">1039</a>
-<a href="#1040" id="1040">1040</a>
-<a href="#1041" id="1041">1041</a>
-<a href="#1042" id="1042">1042</a>
-<a href="#1043" id="1043">1043</a>
-<a href="#1044" id="1044">1044</a>
-<a href="#1045" id="1045">1045</a>
-<a href="#1046" id="1046">1046</a>
-<a href="#1047" id="1047">1047</a>
-<a href="#1048" id="1048">1048</a>
-<a href="#1049" id="1049">1049</a>
-<a href="#1050" id="1050">1050</a>
-<a href="#1051" id="1051">1051</a>
-<a href="#1052" id="1052">1052</a>
-<a href="#1053" id="1053">1053</a>
-<a href="#1054" id="1054">1054</a>
-<a href="#1055" id="1055">1055</a>
-<a href="#1056" id="1056">1056</a>
-<a href="#1057" id="1057">1057</a>
-<a href="#1058" id="1058">1058</a>
-<a href="#1059" id="1059">1059</a>
-<a href="#1060" id="1060">1060</a>
-<a href="#1061" id="1061">1061</a>
-<a href="#1062" id="1062">1062</a>
-<a href="#1063" id="1063">1063</a>
-<a href="#1064" id="1064">1064</a>
-<a href="#1065" id="1065">1065</a>
-<a href="#1066" id="1066">1066</a>
-<a href="#1067" id="1067">1067</a>
-<a href="#1068" id="1068">1068</a>
-<a href="#1069" id="1069">1069</a>
-<a href="#1070" id="1070">1070</a>
-<a href="#1071" id="1071">1071</a>
-<a href="#1072" id="1072">1072</a>
-<a href="#1073" id="1073">1073</a>
-<a href="#1074" id="1074">1074</a>
-<a href="#1075" id="1075">1075</a>
-<a href="#1076" id="1076">1076</a>
-<a href="#1077" id="1077">1077</a>
-<a href="#1078" id="1078">1078</a>
-<a href="#1079" id="1079">1079</a>
-<a href="#1080" id="1080">1080</a>
-<a href="#1081" id="1081">1081</a>
-<a href="#1082" id="1082">1082</a>
-<a href="#1083" id="1083">1083</a>
-<a href="#1084" id="1084">1084</a>
-<a href="#1085" id="1085">1085</a>
-<a href="#1086" id="1086">1086</a>
-<a href="#1087" id="1087">1087</a>
-<a href="#1088" id="1088">1088</a>
-<a href="#1089" id="1089">1089</a>
-<a href="#1090" id="1090">1090</a>
-<a href="#1091" id="1091">1091</a>
-<a href="#1092" id="1092">1092</a>
-<a href="#1093" id="1093">1093</a>
-<a href="#1094" id="1094">1094</a>
-<a href="#1095" id="1095">1095</a>
-<a href="#1096" id="1096">1096</a>
-<a href="#1097" id="1097">1097</a>
-<a href="#1098" id="1098">1098</a>
-<a href="#1099" id="1099">1099</a>
-<a href="#1100" id="1100">1100</a>
-<a href="#1101" id="1101">1101</a>
-<a href="#1102" id="1102">1102</a>
-<a href="#1103" id="1103">1103</a>
-<a href="#1104" id="1104">1104</a>
-<a href="#1105" id="1105">1105</a>
-<a href="#1106" id="1106">1106</a>
-<a href="#1107" id="1107">1107</a>
-<a href="#1108" id="1108">1108</a>
-<a href="#1109" id="1109">1109</a>
-<a href="#1110" id="1110">1110</a>
-<a href="#1111" id="1111">1111</a>
-<a href="#1112" id="1112">1112</a>
-<a href="#1113" id="1113">1113</a>
-<a href="#1114" id="1114">1114</a>
-<a href="#1115" id="1115">1115</a>
-<a href="#1116" id="1116">1116</a>
 </pre><pre class="rust"><code><span class="doccomment">//! A Substrate pallet implementation for Starknet, a decentralized, permissionless, and scalable
 //! zk-rollup for general-purpose smart contracts.
 //! See the [Starknet documentation](https://docs.starknet.io/) for more information.
@@ -1202,7 +1117,6 @@
     DeclareTransaction, DeployAccountTransaction, EventError, EventWrapper <span class="kw">as </span>StarknetEventType, InvokeTransaction,
     Transaction, TransactionExecutionInfoWrapper, TransactionReceiptWrapper, TxType,
 };
-<span class="kw">use </span>sp_core::U256;
 <span class="kw">use </span>sp_runtime::traits::UniqueSaturatedInto;
 <span class="kw">use </span>sp_runtime::DigestItem;
 <span class="kw">use </span>starknet_api::api_core::{ChainId, ContractAddress};
@@ -1270,6 +1184,10 @@
         /// set how long transactions are kept in the mempool.
         </span><span class="attr">#[pallet::constant]
         </span><span class="kw">type </span>TransactionLongevity: Get&lt;TransactionLongevity&gt;;
+        <span class="attr">#[pallet::constant]
+        </span><span class="kw">type </span>InvokeTxMaxNSteps: Get&lt;u32&gt;;
+        <span class="attr">#[pallet::constant]
+        </span><span class="kw">type </span>ValidateMaxNSteps: Get&lt;u32&gt;;
     }
 
     <span class="doccomment">/// The Starknet pallet hooks.
@@ -1331,11 +1249,6 @@
     #[pallet::getter(<span class="kw">fn </span>pending_events)]
     </span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">type </span>PendingEvents&lt;T: Config&gt; =
         StorageValue&lt;<span class="kw">_</span>, BoundedVec&lt;StarknetEventType, MaxTransactions&gt;, ValueQuery&gt;;
-
-    <span class="doccomment">/// The current Starknet block.
-    </span><span class="attr">#[pallet::storage]
-    #[pallet::getter(<span class="kw">fn </span>current_block)]
-    </span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">type </span>CurrentBlock&lt;T: Config&gt; = StorageValue&lt;<span class="kw">_</span>, StarknetBlock, ValueQuery&gt;;
 
     <span class="doccomment">/// Mapping for block number and hashes.
     /// Safe to use `Identity` as the key is already a hash.
@@ -1503,22 +1416,6 @@
     /// Dispatchable functions must be annotated with a weight and must return a DispatchResult.
     </span><span class="attr">#[pallet::call]
     </span><span class="kw">impl</span>&lt;T: Config&gt; Pallet&lt;T&gt; {
-        <span class="doccomment">/// Ping the pallet to check if it is alive.
-        </span><span class="attr">#[pallet::call_index(<span class="number">0</span>)]
-        #[pallet::weight({<span class="number">0</span>})]
-        </span><span class="kw">pub fn </span>ping(origin: OriginFor&lt;T&gt;) -&gt; DispatchResult {
-            ensure_none(origin)<span class="question-mark">?</span>;
-            Pending::&lt;T&gt;::try_append((Transaction::default(), TransactionReceiptWrapper::default()))
-                .map_err(|<span class="kw">_</span>| Error::&lt;T&gt;::TooManyPendingTransactions)<span class="question-mark">?</span>;
-            PendingEvents::&lt;T&gt;::try_append(StarknetEventType::default())
-                .map_err(|<span class="kw">_</span>| Error::&lt;T&gt;::TooManyPendingEvents)<span class="question-mark">?</span>;
-            PendingEvents::&lt;T&gt;::try_append(StarknetEventType::default())
-                .map_err(|<span class="kw">_</span>| Error::&lt;T&gt;::TooManyPendingEvents)<span class="question-mark">?</span>;
-            <span class="macro">log!</span>(info, <span class="string">&quot;Keep Starknet Strange!&quot;</span>);
-            <span class="self">Self</span>::deposit_event(Event::KeepStarknetStrange);
-            <span class="prelude-val">Ok</span>(())
-        }
-
         <span class="doccomment">/// The invoke transaction is the main transaction type used to invoke contract functions in
         /// Starknet.
         /// See `https://docs.starknet.io/documentation/architecture_and_concepts/Blocks/transactions/#invoke_transaction`.
@@ -1530,10 +1427,7 @@
         ///  # Returns
         ///
         /// * `DispatchResult` - The result of the transaction.
-        ///
-        /// # TODO
-        /// * Compute weight
-        </span><span class="attr">#[pallet::call_index(<span class="number">1</span>)]
+        </span><span class="attr">#[pallet::call_index(<span class="number">0</span>)]
         #[pallet::weight({<span class="number">0</span>})]
         </span><span class="kw">pub fn </span>invoke(origin: OriginFor&lt;T&gt;, transaction: InvokeTransaction) -&gt; DispatchResult {
             <span class="comment">// This ensures that the function can only be called via unsigned transaction.
@@ -1593,10 +1487,7 @@
         ///  # Returns
         ///
         /// * `DispatchResult` - The result of the transaction.
-        ///
-        /// # TODO
-        /// * Compute weight
-        </span><span class="attr">#[pallet::call_index(<span class="number">2</span>)]
+        </span><span class="attr">#[pallet::call_index(<span class="number">1</span>)]
         #[pallet::weight({<span class="number">0</span>})]
         </span><span class="kw">pub fn </span>declare(origin: OriginFor&lt;T&gt;, transaction: DeclareTransaction) -&gt; DispatchResult {
             <span class="comment">// This ensures that the function can only be called via unsigned transaction.
@@ -1679,10 +1570,7 @@
         ///  # Returns
         ///
         /// * `DispatchResult` - The result of the transaction.
-        ///
-        /// # TODO
-        /// * Compute weight
-        </span><span class="attr">#[pallet::call_index(<span class="number">3</span>)]
+        </span><span class="attr">#[pallet::call_index(<span class="number">2</span>)]
         #[pallet::weight({<span class="number">0</span>})]
         </span><span class="kw">pub fn </span>deploy_account(origin: OriginFor&lt;T&gt;, transaction: DeployAccountTransaction) -&gt; DispatchResult {
             <span class="comment">// This ensures that the function can only be called via unsigned transaction.
@@ -1759,7 +1647,7 @@
         ///
         /// # TODO
         /// * Compute weight
-        </span><span class="attr">#[pallet::call_index(<span class="number">4</span>)]
+        </span><span class="attr">#[pallet::call_index(<span class="number">3</span>)]
         #[pallet::weight({<span class="number">0</span>})]
         </span><span class="kw">pub fn </span>consume_l1_message(origin: OriginFor&lt;T&gt;, transaction: Transaction) -&gt; DispatchResult {
             <span class="comment">// This ensures that the function can only be called via unsigned transaction.
@@ -1788,39 +1676,6 @@
             </span>Pending::&lt;T&gt;::try_append((transaction.clone(), TransactionReceiptWrapper::default()))
                 .or(<span class="prelude-val">Err</span>(Error::&lt;T&gt;::TooManyPendingTransactions))<span class="question-mark">?</span>;
 
-            <span class="prelude-val">Ok</span>(())
-        }
-
-        <span class="doccomment">/// Set the value of the fee token address.
-        ///
-        /// # Arguments
-        ///
-        /// * `origin` - The origin of the transaction.
-        /// * `fee_token_address` - The value of the fee token address.
-        ///
-        /// # Returns
-        ///
-        /// * `DispatchResult` - The result of the transaction.
-        ///
-        /// # TODO
-        /// * Add some limitations on how often this can be called.
-        </span><span class="attr">#[pallet::call_index(<span class="number">5</span>)]
-        #[pallet::weight({<span class="number">0</span>})]
-        </span><span class="kw">pub fn </span>set_fee_token_address(
-            origin: OriginFor&lt;T&gt;,
-            fee_token_address: ContractAddressWrapper,
-        ) -&gt; DispatchResult {
-            <span class="comment">// Only root can set the fee token address.
-            </span>ensure_root(origin)<span class="question-mark">?</span>;
-            <span class="comment">// Get current fee token address.
-            </span><span class="kw">let </span>current_fee_token_address = <span class="self">Self</span>::fee_token_address();
-            <span class="comment">// Update the fee token address.
-            </span>FeeTokenAddress::&lt;T&gt;::put(fee_token_address);
-            <span class="comment">// Emit event.
-            </span><span class="self">Self</span>::deposit_event(Event::FeeTokenAddressChanged {
-                old_fee_token_address: current_fee_token_address,
-                new_fee_token_address: fee_token_address,
-            });
             <span class="prelude-val">Ok</span>(())
         }
     }
@@ -1858,7 +1713,7 @@
                     </span><span class="self">Self</span>::validate_tx(transaction, transaction_type)<span class="question-mark">?</span>;
                     <span class="comment">// add the requires tag
                     </span><span class="kw">let </span>sender_nonce = Pallet::&lt;T&gt;::nonce(sender_address);
-                    <span class="kw">if </span>Into::&lt;U256&gt;::into(transaction_nonce) &gt; sender_nonce {
+                    <span class="kw">if </span>transaction_nonce.<span class="number">0 </span>&gt; sender_nonce.<span class="number">0 </span>{
                         valid_transaction_builder = valid_transaction_builder
                             .and_requires((sender_address, Felt252Wrapper(transaction_nonce.<span class="number">0 </span>- FieldElement::ONE)));
                     }
@@ -1917,9 +1772,9 @@
     ///
     /// Returns an error if transaction validation fails.
     </span><span class="kw">fn </span>validate_tx(transaction: Transaction, tx_type: TxType) -&gt; <span class="prelude-ty">Result</span>&lt;(), TransactionValidityError&gt; {
+        <span class="kw">let </span>block_context = <span class="self">Self</span>::get_block_context();
         <span class="kw">let </span><span class="kw-2">mut </span>state: BlockifierStateAdapter&lt;T&gt; = BlockifierStateAdapter::&lt;T&gt;::default();
         <span class="kw">let </span><span class="kw-2">mut </span>execution_resources = ExecutionResources::default();
-        <span class="kw">let </span>block_context = <span class="self">Self</span>::get_block_context();
         transaction
             .validate_account_tx(<span class="kw-2">&amp;mut </span>state, <span class="kw-2">&amp;mut </span>execution_resources, <span class="kw-2">&amp;</span>block_context, <span class="kw-2">&amp;</span>tx_type)
             .map_err(|<span class="kw">_</span>| TransactionValidityError::Invalid(InvalidTransaction::BadProof))<span class="question-mark">?</span>;
@@ -1939,9 +1794,6 @@
         <span class="kw">let </span>chain_id = <span class="self">Self</span>::chain_id_str();
         <span class="kw">let </span>sequencer_address = ContractAddress(starknet_api::api_core::PatriciaKey(StarkFelt(SEQUENCER_ADDRESS)));
         <span class="kw">let </span>vm_resource_fee_cost = HashMap::default();
-        <span class="comment">// FIXME: https://github.com/keep-starknet-strange/madara/issues/545
-        </span><span class="kw">let </span>invoke_tx_max_n_steps = <span class="number">1000000</span>;
-        <span class="kw">let </span>validate_max_n_steps = <span class="number">1000000</span>;
         <span class="comment">// FIXME: https://github.com/keep-starknet-strange/madara/issues/329
         </span><span class="kw">let </span>gas_price = <span class="number">10</span>;
         BlockContext {
@@ -1951,19 +1803,10 @@
             sequencer_address,
             fee_token_address,
             vm_resource_fee_cost,
-            invoke_tx_max_n_steps,
-            validate_max_n_steps,
+            invoke_tx_max_n_steps: T::InvokeTxMaxNSteps::get(),
+            validate_max_n_steps: T::ValidateMaxNSteps::get(),
             gas_price,
         }
-    }
-    <span class="doccomment">/// Get current block hash.
-    ///
-    /// # Returns
-    ///
-    /// The current block hash.
-    </span><span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>current_block_hash() -&gt; Felt252Wrapper {
-        <span class="self">Self</span>::current_block().header().hash(T::SystemHash::hasher())
     }
 
     <span class="doccomment">/// convert chain_id
@@ -2015,10 +1858,8 @@
         function_selector: Felt252Wrapper,
         calldata: Vec&lt;Felt252Wrapper&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Felt252Wrapper&gt;, DispatchError&gt; {
-        <span class="comment">// Get current block
-        </span><span class="kw">let </span>block = <span class="self">Self</span>::current_block();
-        <span class="comment">// Get fee token address
-        </span><span class="kw">let </span>fee_token_address = <span class="self">Self</span>::fee_token_address();
+        <span class="comment">// Get current block context
+        </span><span class="kw">let </span>block_context = <span class="self">Self</span>::get_block_context();
         <span class="comment">// Get class hash
         </span><span class="kw">let </span>class_hash = ContractClassHashes::&lt;T&gt;::try_get(address).map_err(|<span class="kw">_</span>| Error::&lt;T&gt;::ContractNotFound)<span class="question-mark">?</span>;
 
@@ -2031,14 +1872,7 @@
             ContractAddressWrapper::default(),
         );
 
-        <span class="kw">let </span>chain_id = <span class="self">Self</span>::chain_id_str();
-
-        <span class="kw">match </span>entrypoint.execute(
-            <span class="kw-2">&amp;mut </span>BlockifierStateAdapter::&lt;T&gt;::default(),
-            block,
-            fee_token_address,
-            ChainId(chain_id),
-        ) {
+        <span class="kw">match </span>entrypoint.execute(<span class="kw-2">&amp;mut </span>BlockifierStateAdapter::&lt;T&gt;::default(), block_context) {
             <span class="prelude-val">Ok</span>(v) =&gt; {
                 <span class="macro">log!</span>(debug, <span class="string">&quot;Transaction executed successfully: {:?}&quot;</span>, v);
                 <span class="kw">let </span>result = v.execution.retdata.<span class="number">0</span>.iter().map(|x| (<span class="kw-2">*</span>x).into()).collect();
@@ -2112,8 +1946,6 @@
             </span>BoundedVec::try_from(transactions).unwrap(),
             BoundedVec::try_from(receipts).unwrap(),
         );
-        <span class="comment">// Save the current block.
-        </span>CurrentBlock::&lt;T&gt;::put(block.clone());
         <span class="comment">// Save the block number &lt;&gt; hash mapping.
         </span><span class="kw">let </span>blockhash = block.header().hash(T::SystemHash::hasher());
         BlockHash::&lt;T&gt;::insert(block_number, blockhash);
@@ -2144,13 +1976,11 @@
         }
 
         <span class="kw">for </span>inner_call <span class="kw">in </span><span class="kw-2">&amp;mut </span>call_info.inner_calls {
-            inner_call.execution.events.sort_by_key(|ordered_event| ordered_event.order);
-            <span class="kw">for </span>ordered_event <span class="kw">in </span><span class="kw-2">&amp;</span>inner_call.execution.events {
-                <span class="kw">let </span>event_type = <span class="self">Self</span>::emit_event(<span class="kw-2">&amp;</span>ordered_event.event, inner_call.call.storage_address, tx_hash)<span class="question-mark">?</span>;
-                events.push(event_type);
+            <span class="kw">let </span>inner_events = <span class="self">Self</span>::emit_events(inner_call, tx_hash)<span class="question-mark">?</span>;
+            <span class="kw">if </span>!inner_events.is_empty() {
+                events.extend(inner_events);
             }
         }
-
         <span class="prelude-val">Ok</span>(events)
     }
 
