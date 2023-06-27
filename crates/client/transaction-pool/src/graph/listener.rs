@@ -22,8 +22,8 @@ use std::hash;
 
 use linked_hash_map::LinkedHashMap;
 use log::{debug, trace};
+use mp_runtime::traits;
 use serde::Serialize;
-use sp_runtime::traits;
 
 use super::{watcher, BlockHash, ChainApi, ExtrinsicHash};
 use crate::LOG_TARGET;

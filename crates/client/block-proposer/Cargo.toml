@@ -31,4 +31,4 @@ sp-blockchain = { workspace = true }
 sp-consensus = { workspace = true }
 sp-core = { workspace = true }
 sp-inherents = { workspace = true }
-sp-runtime = { workspace = true }
+mp-runtime = { workspace = true }

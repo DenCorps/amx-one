@@ -99,7 +99,7 @@ impl<Hash: hash::Hash + Eq + Clone> PoolRotator<Hash> {
 
 #[cfg(test)]
 mod tests {
-    use sp_runtime::transaction_validity::TransactionSource;
+    use mp_runtime::transaction_validity::TransactionSource;
 
     use super::*;
 

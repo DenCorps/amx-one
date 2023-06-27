@@ -21,8 +21,8 @@ use std::sync::Arc;
 use std::time::Instant;
 use std::{fmt, hash};
 
+use mp_runtime::transaction_validity::TransactionTag as Tag;
 use sp_core::hexdisplay::HexDisplay;
-use sp_runtime::transaction_validity::TransactionTag as Tag;
 
 use super::base_pool::Transaction;
 

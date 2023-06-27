@@ -151,7 +151,7 @@ use sp_core::{H256, U256};
 pub extern crate alloc;
 use alloc::vec::Vec;
 
-use sp_runtime::DispatchError;
+use mp_runtime::DispatchError;
 
 // /!\ You should be using runtime types here.
 

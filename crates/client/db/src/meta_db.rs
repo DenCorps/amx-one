@@ -1,10 +1,10 @@
 use std::marker::PhantomData;
 use std::sync::Arc;
 
+use mp_runtime::traits::Block as BlockT;
 // Substrate
 use scale_codec::{Decode, Encode};
 use sp_database::Database;
-use sp_runtime::traits::Block as BlockT;
 
 use crate::DbHash;
 

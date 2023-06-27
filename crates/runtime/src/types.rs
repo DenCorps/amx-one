@@ -1,8 +1,8 @@
 //! Common types used in the runtime.
 //! This file is the canonical source of truth for the types used in the runtime.
 
-use sp_runtime::traits::{IdentifyAccount, Verify};
-use sp_runtime::MultiSignature;
+use mp_runtime::traits::{IdentifyAccount, Verify};
+use mp_runtime::MultiSignature;
 
 /// An index to a block.
 pub type BlockNumber = u32;

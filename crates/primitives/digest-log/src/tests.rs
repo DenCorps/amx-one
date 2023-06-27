@@ -1,5 +1,5 @@
 use assert_matches::assert_matches;
-use sp_runtime::{Digest, DigestItem};
+use mp_runtime::{Digest, DigestItem};
 
 use super::*;
 

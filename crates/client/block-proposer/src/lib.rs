@@ -12,6 +12,8 @@ use futures::channel::oneshot;
 use futures::future::{Future, FutureExt};
 use futures::{future, select};
 use log::{debug, error, info, trace, warn};
+use mp_runtime::traits::{Block as BlockT, Header as HeaderT};
+use mp_runtime::{Digest, Percent, SaturatedConversion};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_block_builder::{BlockBuilderApi, BlockBuilderProvider};
 use sc_client_api::backend;
@@ -24,8 +26,6 @@ use sp_blockchain::HeaderBackend;
 use sp_consensus::{DisableProofRecording, ProofRecording, Proposal};
 use sp_core::traits::SpawnNamed;
 use sp_inherents::InherentData;
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
-use sp_runtime::{Digest, Percent, SaturatedConversion};
 
 /// Default block size limit in bytes used by [`Proposer`].
 ///

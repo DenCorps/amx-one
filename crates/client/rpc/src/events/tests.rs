@@ -1,8 +1,8 @@
+use mp_runtime::BoundedVec;
 use mp_starknet::execution::types::{ContractAddressWrapper, Felt252Wrapper};
 use mp_starknet::transaction::types::EventWrapper;
 use rstest::*;
 use sp_core::bounded_vec;
-use sp_runtime::BoundedVec;
 use starknet_ff::FieldElement;
 
 use crate::events::filter_events_by_params;

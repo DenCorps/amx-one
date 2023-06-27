@@ -17,7 +17,7 @@ pub const SEQ_ADDR_STORAGE_KEY: &[u8] = b"starknet::seq_addr";
 /// The inherent type for the sequencer address.
 pub type InherentType = [u8; 32];
 
-#[derive(Decode, Encode, Error, sp_runtime::RuntimeDebug)]
+#[derive(Decode, Encode, Error, mp_runtime::RuntimeDebug)]
 /// Error types when working with the sequencer address.
 pub enum InherentError {
     /// Submitted address must be `[u8; 32]`.
@@ -61,7 +61,7 @@ mod reexport_std_types {
         }
     }
 
-    #[derive(Copy, Clone, Decode, Encode, sp_runtime::RuntimeDebug)]
+    #[derive(Copy, Clone, Decode, Encode, mp_runtime::RuntimeDebug)]
     /// The inherent data provider for sequencer address.
     pub struct InherentDataProvider {
         /// The sequencer address field.

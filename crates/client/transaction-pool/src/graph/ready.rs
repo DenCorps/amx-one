@@ -21,10 +21,10 @@ use std::sync::Arc;
 use std::{cmp, hash};
 
 use log::{debug, trace};
+use mp_runtime::traits::Member;
+use mp_runtime::transaction_validity::TransactionTag as Tag;
 use sc_transaction_pool_api::error;
 use serde::Serialize;
-use sp_runtime::traits::Member;
-use sp_runtime::transaction_validity::TransactionTag as Tag;
 
 use super::base_pool::Transaction;
 use super::future::WaitingTransaction;
@@ -547,7 +547,7 @@ fn remove_item<T: PartialEq>(vec: &mut Vec<T>, item: &T) {
 
 #[cfg(test)]
 mod tests {
-    use sp_runtime::transaction_validity::TransactionSource as Source;
+    use mp_runtime::transaction_validity::TransactionSource as Source;
 
     use super::*;
 

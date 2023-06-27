@@ -18,6 +18,7 @@ use futures::prelude::*;
 use futures::task::{Context, Poll};
 use futures_timer::Delay;
 use log::debug;
+use mp_runtime::traits::{Block as BlockT, Header as HeaderT};
 use mp_starknet::traits::hash::HasherT;
 use mp_starknet::traits::ThreadSafeCopy;
 use pallet_starknet::runtime_api::StarknetRuntimeApi;
@@ -25,7 +26,6 @@ use sc_client_api::backend::{Backend, StorageProvider};
 use sc_client_api::client::ImportNotifications;
 use sp_api::ProvideRuntimeApi;
 use sp_blockchain::HeaderBackend;
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
 
 /// The worker in charge of syncing the Madara db when it receive a new Substrate block
 pub struct MappingSyncWorker<B: BlockT, C, BE, H> {

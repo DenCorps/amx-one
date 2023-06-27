@@ -30,11 +30,11 @@ export default {
     refTime: "Compact<u64>",
     proofSize: "Compact<u64>",
   },
-  /** Lookup13: sp_runtime::generic::digest::Digest */
+  /** Lookup13: mp_runtime::generic::digest::Digest */
   SpRuntimeDigest: {
     logs: "Vec<SpRuntimeDigestDigestItem>",
   },
-  /** Lookup15: sp_runtime::generic::digest::DigestItem */
+  /** Lookup15: mp_runtime::generic::digest::DigestItem */
   SpRuntimeDigestDigestItem: {
     _enum: {
       Other: "Bytes",
@@ -97,7 +97,7 @@ export default {
   FrameSupportDispatchPays: {
     _enum: ["Yes", "No"],
   },
-  /** Lookup24: sp_runtime::DispatchError */
+  /** Lookup24: mp_runtime::DispatchError */
   SpRuntimeDispatchError: {
     _enum: {
       Other: "Null",
@@ -115,12 +115,12 @@ export default {
       Unavailable: "Null",
     },
   },
-  /** Lookup25: sp_runtime::ModuleError */
+  /** Lookup25: mp_runtime::ModuleError */
   SpRuntimeModuleError: {
     index: "u8",
     error: "[u8;4]",
   },
-  /** Lookup26: sp_runtime::TokenError */
+  /** Lookup26: mp_runtime::TokenError */
   SpRuntimeTokenError: {
     _enum: [
       "NoFunds",
@@ -136,7 +136,7 @@ export default {
   SpArithmeticArithmeticError: {
     _enum: ["Underflow", "Overflow", "DivisionByZero"],
   },
-  /** Lookup28: sp_runtime::TransactionalError */
+  /** Lookup28: mp_runtime::TransactionalError */
   SpRuntimeTransactionalError: {
     _enum: ["LimitReached", "NoLayer"],
   },
@@ -712,7 +712,7 @@ export default {
       "StateDiffError",
     ],
   },
-  /** Lookup142: sp_runtime::MultiSignature */
+  /** Lookup142: mp_runtime::MultiSignature */
   SpRuntimeMultiSignature: {
     _enum: {
       Ed25519: "SpCoreEd25519Signature",

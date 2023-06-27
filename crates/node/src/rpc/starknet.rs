@@ -2,9 +2,9 @@ use std::sync::Arc;
 
 use mc_db::Backend;
 use mc_storage::OverrideHandle;
+use mp_runtime::traits::Header as HeaderT;
 use sc_network_sync::SyncingService;
 use sp_api::BlockT;
-use sp_runtime::traits::Header as HeaderT;
 
 /// Extra dependencies for Starknet compatibility.
 pub struct StarknetDeps<C, B: BlockT> {

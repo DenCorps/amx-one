@@ -38,7 +38,6 @@ pallet-aura = { workspace = true }
 pallet-grandpa = { workspace = true }
 pallet-timestamp = { workspace = true }
 sp-core = { workspace = true }
-sp-runtime = { workspace = true }
 sp-std = { workspace = true }
 
 # Used for the node RPCs
@@ -53,6 +52,7 @@ frame-system-benchmarking = { workspace = true, optional = true }
 pallet-starknet = { workspace = true }
 # Madara Primitives
 mp-starknet = { workspace = true, default-features = false }
+mp-runtime = { workspace = true }
 # Starknet dependencies
 blockifier = { workspace = true, default-features = false }
 
@@ -83,7 +83,7 @@ std = [
   "sp-core/std",
   "sp-inherents/std",
   "sp-offchain/std",
-  "sp-runtime/std",
+  "mp-runtime/std",
   "sp-session/std",
   "sp-std/std",
   "sp-transaction-pool/std",
@@ -111,7 +111,7 @@ runtime-benchmarks = [
   "frame-system/runtime-benchmarks",
   "pallet-grandpa/runtime-benchmarks",
   "pallet-timestamp/runtime-benchmarks",
-  "sp-runtime/runtime-benchmarks",
+  "mp-runtime/runtime-benchmarks",
   # Madara pallets
   "pallet-starknet/runtime-benchmarks",
 ]

@@ -4398,6 +4398,7 @@ dependencies = [
  "mc-rpc",
  "mc-storage",
  "mc-transaction-pool",
+ "mp-runtime",
  "mp-starknet",
  "pallet-starknet",
  "sc-cli",
@@ -4425,7 +4426,6 @@ dependencies = [
  "sp-inherents",
  "sp-keyring",
  "sp-offchain",
- "sp-runtime",
  "sp-state-machine",
  "sp-timestamp",
  "sp-trie",
@@ -4448,6 +4448,7 @@ dependencies = [
  "frame-system-benchmarking",
  "frame-system-rpc-runtime-api",
  "frame-try-runtime",
+ "mp-runtime",
  "mp-starknet",
  "pallet-aura",
  "pallet-grandpa",
@@ -4461,7 +4462,6 @@ dependencies = [
  "sp-core",
  "sp-inherents",
  "sp-offchain",
- "sp-runtime",
  "sp-session",
  "sp-std",
  "sp-transaction-pool",
@@ -4513,6 +4513,7 @@ dependencies = [
  "futures",
  "futures-timer",
  "log",
+ "mp-runtime",
  "parity-scale-codec",
  "sc-block-builder",
  "sc-client-api",
@@ -4524,7 +4525,6 @@ dependencies = [
  "sp-consensus",
  "sp-core",
  "sp-inherents",
- "sp-runtime",
  "substrate-prometheus-endpoint",
 ]
 
@@ -4534,12 +4534,12 @@ version = "0.1.0"
 dependencies = [
  "kvdb-rocksdb",
  "log",
+ "mp-runtime",
  "parity-db",
  "parity-scale-codec",
  "sc-client-db",
  "sp-core",
  "sp-database",
- "sp-runtime",
 ]
 
 [[package]]
@@ -4553,13 +4553,13 @@ dependencies = [
  "mc-rpc-core",
  "mc-storage",
  "mp-digest-log",
+ "mp-runtime",
  "mp-starknet",
  "pallet-starknet",
  "sc-client-api",
  "sp-api",
  "sp-blockchain",
  "sp-core",
- "sp-runtime",
 ]
 
 [[package]]
@@ -4577,6 +4577,7 @@ dependencies = [
  "mc-rpc-core",
  "mc-storage",
  "mc-transaction-pool",
+ "mp-runtime",
  "mp-starknet",
  "pallet-starknet",
  "pretty_assertions",
@@ -4589,7 +4590,6 @@ dependencies = [
  "sp-arithmetic",
  "sp-blockchain",
  "sp-core",
- "sp-runtime",
  "starknet-core",
  "starknet-ff",
  "starknet_api",
@@ -4608,6 +4608,7 @@ dependencies = [
  "hex",
  "jsonrpsee",
  "mp-digest-log",
+ "mp-runtime",
  "mp-starknet",
  "serde",
  "serde_json",
@@ -4615,7 +4616,6 @@ dependencies = [
  "sp-api",
  "sp-blockchain",
  "sp-core",
- "sp-runtime",
  "starknet-core",
  "starknet_api",
 ]
@@ -4628,6 +4628,7 @@ dependencies = [
  "frame-support",
  "frame-system",
  "madara-runtime",
+ "mp-runtime",
  "mp-starknet",
  "pallet-starknet",
  "parity-scale-codec",
@@ -4636,7 +4637,6 @@ dependencies = [
  "sp-blockchain",
  "sp-core",
  "sp-io",
- "sp-runtime",
  "sp-storage",
  "starknet-core",
 ]
@@ -4650,6 +4650,7 @@ dependencies = [
  "futures-timer",
  "linked-hash-map",
  "log",
+ "mp-runtime",
  "num-traits",
  "parity-scale-codec",
  "parking_lot 0.12.1",
@@ -4661,7 +4662,6 @@ dependencies = [
  "sp-api",
  "sp-blockchain",
  "sp-core",
- "sp-runtime",
  "sp-tracing",
  "sp-transaction-pool",
  "substrate-prometheus-endpoint",
@@ -4822,9 +4822,30 @@ name = "mp-digest-log"
 version = "0.1.0-alpha"
 dependencies = [
  "assert_matches",
+ "mp-runtime",
  "mp-starknet",
  "parity-scale-codec",
- "sp-runtime",
+]
+
+[[package]]
+name = "mp-runtime"
+version = "7.0.0"
+dependencies = [
+ "either",
+ "hash256-std-hasher",
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "paste",
+ "rand 0.8.5",
+ "scale-info",
+ "serde",
+ "sp-application-crypto",
+ "sp-arithmetic",
+ "sp-core",
+ "sp-io",
+ "sp-std",
+ "sp-weights",
 ]
 
 [[package]]
@@ -4840,6 +4861,7 @@ dependencies = [
  "frame-support",
  "hex",
  "lazy_static",
+ "mp-runtime",
  "parity-scale-codec",
  "pretty_assertions",
  "rand 0.8.5",
@@ -4848,7 +4870,6 @@ dependencies = [
  "serde_json",
  "sp-core",
  "sp-inherents",
- "sp-runtime",
  "sp-std",
  "starknet-core",
  "starknet-crypto",
@@ -5377,6 +5398,7 @@ dependencies = [
  "lazy_static",
  "log",
  "mp-digest-log",
+ "mp-runtime",
  "mp-starknet",
  "pallet-timestamp",
  "parity-scale-codec",
@@ -5388,7 +5410,6 @@ dependencies = [
  "sp-core",
  "sp-inherents",
  "sp-io",
- "sp-runtime",
  "sp-std",
  "starknet-core",
  "starknet-crypto",

@@ -4,9 +4,9 @@ use std::{env, fs};
 
 use blockifier::execution::contract_class::ContractClass;
 use frame_support::bounded_vec;
+use mp_runtime::BoundedVec;
 use mp_starknet::execution::types::Felt252Wrapper;
 use mp_starknet::transaction::types::MaxArraySize;
-use sp_runtime::BoundedVec;
 use starknet_crypto::{sign, FieldElement};
 
 use super::constants::{ACCOUNT_PRIVATE_KEY, K};

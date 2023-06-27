@@ -24,13 +24,13 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use madara_runtime as runtime;
+use mp_runtime::{OpaqueExtrinsic, SaturatedConversion};
 use runtime::SystemCall;
 use sc_cli::Result;
 use sc_client_api::BlockBackend;
 use sp_core::{Encode, Pair};
 use sp_inherents::{InherentData, InherentDataProvider};
 use sp_keyring::Sr25519Keyring;
-use sp_runtime::{OpaqueExtrinsic, SaturatedConversion};
 
 use crate::service::FullClient;
 
@@ -86,7 +86,7 @@ pub fn create_benchmark_extrinsic(
         frame_system::CheckSpecVersion::<runtime::Runtime>::new(),
         frame_system::CheckTxVersion::<runtime::Runtime>::new(),
         frame_system::CheckGenesis::<runtime::Runtime>::new(),
-        frame_system::CheckEra::<runtime::Runtime>::from(sp_runtime::generic::Era::mortal(
+        frame_system::CheckEra::<runtime::Runtime>::from(mp_runtime::generic::Era::mortal(
             period,
             best_block.saturated_into(),
         )),
@@ -103,7 +103,7 @@ pub fn create_benchmark_extrinsic(
 
     runtime::UncheckedExtrinsic::new_signed(
         call,
-        sp_runtime::AccountId32::from(sender.public()).into(),
+        mp_runtime::AccountId32::from(sender.public()).into(),
         runtime::Signature::Sr25519(signature),
         extra,
     )

@@ -4,7 +4,8 @@ use std::sync::Arc;
 use blockifier::execution::contract_class::ContractClass;
 use frame_system::EventRecord;
 use madara_runtime::{Hash, RuntimeEvent};
-use mp_starknet::execution::types::{ClassHashWrapper, ContractAddressWrapper, Felt252Wrapper};
+use mp_runtime::traits::Block as BlockT;
+use mp_starknet::execution::types::{ClassHashWrapper, ContractAddressWrapper, ContractClassWrapper, Felt252Wrapper};
 use mp_starknet::storage::{
     PALLET_STARKNET, PALLET_SYSTEM, STARKNET_CHAIN_ID, STARKNET_CONTRACT_CLASS, STARKNET_CONTRACT_CLASS_HASH,
     STARKNET_NONCE, STARKNET_STORAGE, SYSTEM_EVENTS,
@@ -16,7 +17,6 @@ use pallet_starknet::Event;
 use sc_client_api::backend::{Backend, StorageProvider};
 use scale_codec::{Decode, Encode};
 use sp_blockchain::HeaderBackend;
-use sp_runtime::traits::Block as BlockT;
 use sp_storage::StorageKey;
 use starknet_core::types::FieldElement;
 

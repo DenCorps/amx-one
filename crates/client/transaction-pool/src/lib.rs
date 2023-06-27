@@ -41,6 +41,8 @@ use futures::prelude::*;
 pub use graph::base_pool::Limit as PoolLimit;
 pub use graph::{ChainApi, Options, Pool, Transaction, ValidatedTransaction};
 use graph::{ExtrinsicHash, IsValidator};
+use mp_runtime::generic::BlockId;
+use mp_runtime::traits::{AtLeast32Bit, Block as BlockT, Extrinsic, Header as HeaderT, NumberFor, Zero};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_transaction_pool_api::error::Error as TxPoolError;
@@ -50,8 +52,6 @@ use sc_transaction_pool_api::{
 };
 use sp_blockchain::{HashAndNumber, TreeRoute};
 use sp_core::traits::SpawnEssentialNamed;
-use sp_runtime::generic::BlockId;
-use sp_runtime::traits::{AtLeast32Bit, Block as BlockT, Extrinsic, Header as HeaderT, NumberFor, Zero};
 
 pub use crate::api::FullChainApi;
 use crate::metrics::MetricsLink as PrometheusMetrics;
@@ -345,7 +345,7 @@ where
     Client: sp_api::ProvideRuntimeApi<Block>
         + sc_client_api::BlockBackend<Block>
         + sc_client_api::blockchain::HeaderBackend<Block>
-        + sp_runtime::traits::BlockIdTo<Block>
+        + mp_runtime::traits::BlockIdTo<Block>
         + sc_client_api::ExecutorProvider<Block>
         + sc_client_api::UsageProvider<Block>
         + sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>
@@ -388,7 +388,7 @@ where
     Client: sp_api::ProvideRuntimeApi<Block>
         + sc_client_api::BlockBackend<Block>
         + sc_client_api::blockchain::HeaderBackend<Block>
-        + sp_runtime::traits::BlockIdTo<Block>
+        + mp_runtime::traits::BlockIdTo<Block>
         + sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>,
     Client: Send + Sync + 'static,
     Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
@@ -402,8 +402,8 @@ where
         at: &BlockId<Self::Block>,
         xt: sc_transaction_pool_api::LocalTransactionFor<Self>,
     ) -> Result<Self::Hash, Self::Error> {
-        use sp_runtime::traits::SaturatedConversion;
-        use sp_runtime::transaction_validity::TransactionValidityError;
+        use mp_runtime::traits::SaturatedConversion;
+        use mp_runtime::transaction_validity::TransactionValidityError;
 
         let validity =
             self.api.validate_transaction_blocking(at, TransactionSource::Local, xt.clone())?.map_err(|e| {

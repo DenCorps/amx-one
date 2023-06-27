@@ -26,6 +26,9 @@ use futures::channel::{mpsc, oneshot};
 use futures::future::{ready, Future, FutureExt, Ready};
 use futures::lock::Mutex;
 use futures::{SinkExt, StreamExt};
+use mp_runtime::generic::BlockId;
+use mp_runtime::traits::{self, Block as BlockT, BlockIdTo};
+use mp_runtime::transaction_validity::{TransactionSource, TransactionValidity};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_client_api::blockchain::HeaderBackend;
 use sc_client_api::BlockBackend;
@@ -33,9 +36,6 @@ use scale_codec::Encode;
 use sp_api::{ApiExt, ProvideRuntimeApi};
 use sp_blockchain::{HeaderMetadata, TreeRoute};
 use sp_core::traits::SpawnEssentialNamed;
-use sp_runtime::generic::BlockId;
-use sp_runtime::traits::{self, Block as BlockT, BlockIdTo};
-use sp_runtime::transaction_validity::{TransactionSource, TransactionValidity};
 use sp_transaction_pool::runtime_api::TaggedTransactionQueue;
 
 use crate::error::{self, Error};
@@ -239,8 +239,8 @@ where
                     )?;
 
                 // The old versions require us to call `initialize_block` before.
-                runtime_api.initialize_block(block_hash, &sp_runtime::traits::Header::new(
-                    block_number + sp_runtime::traits::One::one(),
+                runtime_api.initialize_block(block_hash, &mp_runtime::traits::Header::new(
+                    block_number + mp_runtime::traits::One::one(),
                     Default::default(),
                     Default::default(),
                     block_hash,
