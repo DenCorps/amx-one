@@ -21,7 +21,7 @@ log = { workspace = true, default-features = true }
 mp-runtime = { workspace = true, default-features = true }
 parity-db = { version = "0.4.7", optional = true }
 sc-client-db = { workspace = true, default-features = true }
-scale-codec = { workspace = true, default-features = true, features = [
+codec = { workspace = true, default-features = true, features = [
   "derive",
 ] }
 sp-core = { workspace = true, default-features = true }

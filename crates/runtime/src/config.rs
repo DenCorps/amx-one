@@ -11,8 +11,8 @@ use mp_runtime::create_runtime_str;
 pub use mp_runtime::BuildStorage;
 pub use mp_runtime::{Perbill, Permill};
 #[cfg(feature = "std")]
-use sp_version::NativeVersion;
-use sp_version::RuntimeVersion;
+use mp_version::NativeVersion;
+use mp_version::RuntimeVersion;
 
 use crate::{BlockNumber, RUNTIME_API_VERSIONS};
 
@@ -31,7 +31,7 @@ pub const SLOT_DURATION: u64 = MILLISECS_PER_BLOCK;
 
 // To learn more about runtime versioning, see:
 // https://docs.substrate.io/main-docs/build/upgrade#runtime-versioning
-#[sp_version::runtime_version]
+#[mp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
     spec_name: create_runtime_str!("madara"),
     impl_name: create_runtime_str!("madara"),

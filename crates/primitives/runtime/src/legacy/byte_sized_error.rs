@@ -17,84 +17,84 @@
 
 //! Runtime types that existed prior to BlockBuilder API version 6.
 
-use crate::{ArithmeticError, TokenError};
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+use crate::{ArithmeticError, TokenError};
+
 /// [`ModuleError`] type definition before BlockBuilder API version 6.
 #[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ModuleError {
-	/// Module index, matching the metadata module index.
-	pub index: u8,
-	/// Module specific error value.
-	pub error: u8,
-	/// Optional error message.
-	#[codec(skip)]
-	#[cfg_attr(feature = "serde", serde(skip_deserializing))]
-	pub message: Option<&'static str>,
+    /// Module index, matching the metadata module index.
+    pub index: u8,
+    /// Module specific error value.
+    pub error: u8,
+    /// Optional error message.
+    #[codec(skip)]
+    #[cfg_attr(feature = "serde", serde(skip_deserializing))]
+    pub message: Option<&'static str>,
 }
 
 impl PartialEq for ModuleError {
-	fn eq(&self, other: &Self) -> bool {
-		(self.index == other.index) && (self.error == other.error)
-	}
+    fn eq(&self, other: &Self) -> bool {
+        (self.index == other.index) && (self.error == other.error)
+    }
 }
 
 /// [`DispatchError`] type definition before BlockBuilder API version 6.
 #[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum DispatchError {
-	/// Some error occurred.
-	Other(
-		#[codec(skip)]
-		#[cfg_attr(feature = "serde", serde(skip_deserializing))]
-		&'static str,
-	),
-	/// Failed to lookup some data.
-	CannotLookup,
-	/// A bad origin.
-	BadOrigin,
-	/// A custom error in a module.
-	Module(ModuleError),
-	/// At least one consumer is remaining so the account cannot be destroyed.
-	ConsumerRemaining,
-	/// There are no providers so the account cannot be created.
-	NoProviders,
-	/// There are too many consumers so the account cannot be created.
-	TooManyConsumers,
-	/// An error to do with tokens.
-	Token(TokenError),
-	/// An arithmetic error.
-	Arithmetic(ArithmeticError),
+    /// Some error occurred.
+    Other(
+        #[codec(skip)]
+        #[cfg_attr(feature = "serde", serde(skip_deserializing))]
+        &'static str,
+    ),
+    /// Failed to lookup some data.
+    CannotLookup,
+    /// A bad origin.
+    BadOrigin,
+    /// A custom error in a module.
+    Module(ModuleError),
+    /// At least one consumer is remaining so the account cannot be destroyed.
+    ConsumerRemaining,
+    /// There are no providers so the account cannot be created.
+    NoProviders,
+    /// There are too many consumers so the account cannot be created.
+    TooManyConsumers,
+    /// An error to do with tokens.
+    Token(TokenError),
+    /// An arithmetic error.
+    Arithmetic(ArithmeticError),
 }
 
 /// [`DispatchOutcome`] type definition before BlockBuilder API version 6.
 pub type DispatchOutcome = Result<(), DispatchError>;
 
 /// [`ApplyExtrinsicResult`] type definition before BlockBuilder API version 6.
-pub type ApplyExtrinsicResult =
-	Result<DispatchOutcome, crate::transaction_validity::TransactionValidityError>;
+pub type ApplyExtrinsicResult = Result<DispatchOutcome, crate::transaction_validity::TransactionValidityError>;
 
 /// Convert the legacy `ApplyExtrinsicResult` type to the latest version.
 pub fn convert_to_latest(old: ApplyExtrinsicResult) -> crate::ApplyExtrinsicResult {
-	old.map(|outcome| {
-		outcome.map_err(|e| match e {
-			DispatchError::Other(s) => crate::DispatchError::Other(s),
-			DispatchError::CannotLookup => crate::DispatchError::CannotLookup,
-			DispatchError::BadOrigin => crate::DispatchError::BadOrigin,
-			DispatchError::Module(err) => crate::DispatchError::Module(crate::ModuleError {
-				index: err.index,
-				error: [err.error, 0, 0, 0],
-				message: err.message,
-			}),
-			DispatchError::ConsumerRemaining => crate::DispatchError::ConsumerRemaining,
-			DispatchError::NoProviders => crate::DispatchError::NoProviders,
-			DispatchError::TooManyConsumers => crate::DispatchError::TooManyConsumers,
-			DispatchError::Token(err) => crate::DispatchError::Token(err),
-			DispatchError::Arithmetic(err) => crate::DispatchError::Arithmetic(err),
-		})
-	})
+    old.map(|outcome| {
+        outcome.map_err(|e| match e {
+            DispatchError::Other(s) => crate::DispatchError::Other(s),
+            DispatchError::CannotLookup => crate::DispatchError::CannotLookup,
+            DispatchError::BadOrigin => crate::DispatchError::BadOrigin,
+            DispatchError::Module(err) => crate::DispatchError::Module(crate::ModuleError {
+                index: err.index,
+                error: [err.error, 0, 0, 0],
+                message: err.message,
+            }),
+            DispatchError::ConsumerRemaining => crate::DispatchError::ConsumerRemaining,
+            DispatchError::NoProviders => crate::DispatchError::NoProviders,
+            DispatchError::TooManyConsumers => crate::DispatchError::TooManyConsumers,
+            DispatchError::Token(err) => crate::DispatchError::Token(err),
+            DispatchError::Arithmetic(err) => crate::DispatchError::Arithmetic(err),
+        })
+    })
 }

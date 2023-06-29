@@ -5,8 +5,8 @@ use core::iter::once;
 use core::marker::PhantomData;
 
 use bitvec::prelude::{BitSlice, BitVec, Msb0};
+use codec::{Decode, Encode, Error, Input, Output};
 use derive_more::Constructor;
-use scale_codec::{Decode, Encode, Error, Input, Output};
 use scale_info::build::Fields;
 use scale_info::{Path, Type, TypeInfo};
 use starknet_api::stdlib::collections::HashMap;
@@ -56,7 +56,7 @@ impl TypeInfo for NodesMapping {
 }
 
 /// Lightweight representation of [BinaryNode]. Only holds left and right hashes.
-#[derive(Debug, Clone, PartialEq, scale_codec::Encode, scale_info::TypeInfo, scale_codec::Decode)]
+#[derive(Debug, Clone, PartialEq, codec::Encode, scale_info::TypeInfo, codec::Decode)]
 pub struct BinaryProofNode {
     /// Left hash.
     pub left_hash: Felt252Wrapper,
@@ -65,7 +65,7 @@ pub struct BinaryProofNode {
 }
 
 /// Ligthtweight representation of [EdgeNode]. Only holds its path and its child's hash.
-#[derive(Debug, Clone, PartialEq, scale_codec::Encode, scale_info::TypeInfo, scale_codec::Decode)]
+#[derive(Debug, Clone, PartialEq, codec::Encode, scale_info::TypeInfo, codec::Decode)]
 pub struct EdgeProofNode {
     /// Path of the node.
     pub path: BitVec<u8, Msb0>,
@@ -91,7 +91,7 @@ fn get_proof_node(node: &Node, nodes: &HashMap<NodeId, Node>) -> ProofNode {
 /// [ProofNode] s are lightweight versions of their `Node` counterpart.
 /// They only consist of [BinaryProofNode] and [EdgeProofNode] because `Leaf`
 /// and `Unresolved` nodes should not appear in a proof.
-#[derive(Debug, Clone, PartialEq, scale_codec::Encode, scale_info::TypeInfo, scale_codec::Decode)]
+#[derive(Debug, Clone, PartialEq, codec::Encode, scale_info::TypeInfo, codec::Decode)]
 pub enum ProofNode {
     /// Binary node.
     Binary(BinaryProofNode),
@@ -105,7 +105,7 @@ pub enum ProofNode {
 /// states.
 ///
 /// For more information on how this functions internally, see [here](super::merkle_node).
-#[derive(Debug, Clone, PartialEq, scale_codec::Encode, scale_info::TypeInfo, scale_codec::Decode)]
+#[derive(Debug, Clone, PartialEq, codec::Encode, scale_info::TypeInfo, codec::Decode)]
 pub struct MerkleTree<H: CryptoHasherT> {
     root: NodeId,
     nodes: NodesMapping,

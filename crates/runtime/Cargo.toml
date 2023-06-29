@@ -16,23 +16,24 @@ repository = "https://github.com/keep-starknet-strange/madara"
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-scale-codec = { package = "parity-scale-codec", workspace = true, features = [
+codec = { package = "parity-scale-codec", workspace = true, features = [
   "derive",
 ] }
 scale-info = { workspace = true, features = ["derive"] }
 
-sp-api = { workspace = true }
-sp-block-builder = { workspace = true }
+mp-api = { workspace = true }
+mp-block-builder = { workspace = true }
+frame-support = { workspace = true }
+frame-system = { workspace = true }
+
 sp-consensus-aura = { workspace = true }
 sp-inherents = { workspace = true }
 sp-offchain = { workspace = true }
 sp-session = { workspace = true }
-sp-transaction-pool = { workspace = true }
-sp-version = { workspace = true }
+mp-transaction-pool = { workspace = true }
+mp-version = { workspace = true }
 
 frame-executive = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
 frame-try-runtime = { workspace = true, optional = true }
 pallet-aura = { workspace = true }
 pallet-grandpa = { workspace = true }
@@ -63,33 +64,34 @@ substrate-wasm-builder = { workspace = true }
 std = [
   # Madara pallets
   "pallet-starknet/std",
+  # Madara dependencies
+  "frame-support/std",
+  "frame-system/std",
+  "mp-api/std",
+  "mp-block-builder/std",
+  "mp-runtime/std",
   # Frame dependencies
   "frame-try-runtime?/std",
   "frame-system-benchmarking?/std",
   "frame-benchmarking?/std",
   "frame-executive/std",
-  "frame-support/std",
   "frame-system-rpc-runtime-api/std",
-  "frame-system/std",
   "frame-try-runtime/std",
   # Frame pallets dependencies
   "pallet-aura/std",
   "pallet-grandpa/std",
   "pallet-timestamp/std",
   # Substrate primitives dependencies
-  "sp-api/std",
-  "sp-block-builder/std",
   "sp-consensus-aura/std",
   "sp-core/std",
   "sp-inherents/std",
   "sp-offchain/std",
-  "mp-runtime/std",
   "sp-session/std",
   "sp-std/std",
-  "sp-transaction-pool/std",
-  "sp-version/std",
+  "mp-transaction-pool/std",
+  "mp-version/std",
   # 3rd party dependencies
-  "scale-codec/std",
+  "codec/std",
   "scale-info/std",
 ]
 try-runtime = [

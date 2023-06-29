@@ -28,16 +28,7 @@ pub type MaxCalldataSize = ConstU32<{ u32::MAX }>;
 pub type MaxCalldataSize = ConstU32<100>;
 
 /// Representation of a Starknet Call Entry Point.
-#[derive(
-    Clone,
-    Debug,
-    PartialEq,
-    Eq,
-    scale_codec::Encode,
-    scale_codec::Decode,
-    scale_info::TypeInfo,
-    scale_codec::MaxEncodedLen,
-)]
+#[derive(Clone, Debug, PartialEq, Eq, codec::Encode, codec::Decode, scale_info::TypeInfo, codec::MaxEncodedLen)]
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
 pub struct CallEntryPointWrapper {
     /// The class hash

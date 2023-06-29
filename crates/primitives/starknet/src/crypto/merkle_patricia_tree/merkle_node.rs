@@ -7,7 +7,7 @@
 use bitvec::order::Msb0;
 use bitvec::prelude::BitVec;
 use bitvec::slice::BitSlice;
-use scale_codec::{Decode, Encode};
+use codec::{Decode, Encode};
 use starknet_api::stdlib::collections::HashMap;
 
 use crate::execution::felt252_wrapper::Felt252Wrapper;

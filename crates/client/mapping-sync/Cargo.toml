@@ -29,10 +29,10 @@ mp-starknet = { workspace = true }
 pallet-starknet = { workspace = true }
 
 # Substrate client
-sc-client-api = { workspace = true }
+mc-client-api = { workspace = true }
 
 # Substrate primitives
-sp-api = { workspace = true }
+mp-api = { workspace = true }
 sp-core = { workspace = true }
 
 # Third party dependencies

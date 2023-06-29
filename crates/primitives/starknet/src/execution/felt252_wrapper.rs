@@ -10,7 +10,7 @@
 use alloc::string::String;
 
 use cairo_vm::felt::Felt252;
-use scale_codec::{Decode, Encode, EncodeLike, Error, Input, MaxEncodedLen, Output};
+use codec::{Decode, Encode, EncodeLike, Error, Input, MaxEncodedLen, Output};
 use scale_info::build::Fields;
 use scale_info::{Path, Type, TypeInfo};
 use sp_core::{H256, U256};

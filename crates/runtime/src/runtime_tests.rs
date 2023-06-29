@@ -6,7 +6,7 @@ mod tests {
 
     use sp_core::hexdisplay::HexDisplay;
 
-    use crate::sp_api_hidden_includes_construct_runtime::hidden_include::traits::WhitelistedStorageKeys;
+    use crate::mp_api_hidden_includes_construct_runtime::hidden_include::traits::WhitelistedStorageKeys;
     use crate::*;
     #[test]
     fn check_whitelist() {

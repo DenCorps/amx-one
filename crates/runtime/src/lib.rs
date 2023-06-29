@@ -27,11 +27,20 @@ pub use frame_support::weights::{IdentityFee, Weight};
 pub use frame_support::{construct_runtime, parameter_types, StorageValue};
 pub use frame_system::Call as SystemCall;
 use frame_system::EventRecord;
+use mp_api::impl_runtime_apis;
+use mp_consensus_aura::sr25519::AuthorityId as AuraId;
+use mp_runtime::traits::{BlakeTwo256, Block as BlockT, NumberFor};
+use mp_runtime::transaction_validity::{TransactionSource, TransactionValidity};
+#[cfg(any(feature = "std", test))]
+pub use mp_runtime::BuildStorage;
+use mp_runtime::{generic, ApplyExtrinsicResult, DispatchError};
+pub use mp_runtime::{Perbill, Permill};
 use mp_starknet::crypto::hash::Hasher;
 use mp_starknet::execution::types::{ClassHashWrapper, ContractAddressWrapper, Felt252Wrapper, StorageKeyWrapper};
 use mp_starknet::transaction::types::{
     DeclareTransaction, DeployAccountTransaction, EventWrapper, InvokeTransaction, Transaction, TxType,
 };
+use mp_version::RuntimeVersion;
 use pallet_grandpa::{fg_primitives, AuthorityId as GrandpaId, AuthorityList as GrandpaAuthorityList};
 /// Import the StarkNet pallet.
 pub use pallet_starknet;
@@ -39,18 +48,9 @@ use pallet_starknet::types::NonceWrapper;
 use pallet_starknet::Call::{declare, deploy_account, invoke};
 use pallet_starknet::Event;
 pub use pallet_timestamp::Call as TimestampCall;
-use sp_api::impl_runtime_apis;
-use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::crypto::KeyTypeId;
 use sp_core::OpaqueMetadata;
-use mp_runtime::traits::{BlakeTwo256, Block as BlockT, NumberFor};
-use mp_runtime::transaction_validity::{TransactionSource, TransactionValidity};
-#[cfg(any(feature = "std", test))]
-pub use mp_runtime::BuildStorage;
-use mp_runtime::{generic, ApplyExtrinsicResult, DispatchError};
-pub use mp_runtime::{Perbill, Permill};
 use sp_std::prelude::*;
-use sp_version::RuntimeVersion;
 /// Import the types.
 pub use types::*;
 
@@ -111,7 +111,7 @@ mod benches {
 }
 
 impl_runtime_apis! {
-    impl sp_api::Core<Block> for Runtime {
+    impl mp_api::Core<Block> for Runtime {
         fn version() -> RuntimeVersion {
             VERSION
         }
@@ -125,7 +125,7 @@ impl_runtime_apis! {
         }
     }
 
-    impl sp_api::Metadata<Block> for Runtime {
+    impl mp_api::Metadata<Block> for Runtime {
         fn metadata() -> OpaqueMetadata {
             OpaqueMetadata::new(Runtime::metadata().into())
         }
@@ -139,7 +139,7 @@ impl_runtime_apis! {
         }
     }
 
-    impl sp_block_builder::BlockBuilder<Block> for Runtime {
+    impl mp_block_builder::BlockBuilder<Block> for Runtime {
         fn apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
             Executive::apply_extrinsic(extrinsic)
         }
@@ -160,7 +160,7 @@ impl_runtime_apis! {
         }
     }
 
-    impl sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
+    impl mp_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
         fn validate_transaction(
             source: TransactionSource,
             tx: <Block as BlockT>::Extrinsic,
@@ -176,9 +176,9 @@ impl_runtime_apis! {
         }
     }
 
-    impl sp_consensus_aura::AuraApi<Block, AuraId> for Runtime {
-        fn slot_duration() -> sp_consensus_aura::SlotDuration {
-            sp_consensus_aura::SlotDuration::from_millis(Aura::slot_duration())
+    impl mp_consensus_aura::AuraApi<Block, AuraId> for Runtime {
+        fn slot_duration() -> mp_consensus_aura::SlotDuration {
+            mp_consensus_aura::SlotDuration::from_millis(Aura::slot_duration())
         }
 
         fn authorities() -> Vec<AuraId> {

@@ -1,6 +1,6 @@
 use core::array::TryFromSliceError;
 
-use scale_codec::{Decode, Encode};
+use codec::{Decode, Encode};
 use sp_inherents::{InherentData, InherentIdentifier, IsFatalError};
 use thiserror_no_std::Error;
 

@@ -8,7 +8,7 @@ use starknet_api::StarknetApiError;
 use starknet_ff::{FieldElement, FromByteArrayError};
 use thiserror_no_std::Error;
 
-use crate::scale_codec::{Decode, Encode, Error, Input, MaxEncodedLen, Output};
+use crate::codec::{Decode, Encode, Error, Input, MaxEncodedLen, Output};
 /// Max number of entrypoints.
 pub type MaxEntryPoints = ConstU32<4294967295>;
 

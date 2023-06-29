@@ -7,7 +7,7 @@ use crate::execution::felt252_wrapper::Felt252Wrapper;
 use crate::traits::hash::{CryptoHasherT, DefaultHasher, HasherT};
 
 /// The poseidon hasher.
-#[derive(Clone, Copy, Default, scale_codec::Encode, scale_codec::Decode, scale_info::TypeInfo)]
+#[derive(Clone, Copy, Default, codec::Encode, codec::Decode, scale_info::TypeInfo)]
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
 pub struct PoseidonHasher;
 

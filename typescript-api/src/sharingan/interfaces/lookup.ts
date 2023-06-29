@@ -150,7 +150,7 @@ export default {
       Resumed: "Null",
     },
   },
-  /** Lookup32: sp_consensus_grandpa::app::Public */
+  /** Lookup32: mp_consensus_grandpa::app::Public */
   SpConsensusGrandpaAppPublic: "SpCoreEd25519Public",
   /** Lookup33: sp_core::ed25519::Public */
   SpCoreEd25519Public: "[u8;32]",
@@ -352,7 +352,7 @@ export default {
     read: "u64",
     write: "u64",
   },
-  /** Lookup64: sp_version::RuntimeVersion */
+  /** Lookup64: mp_version::RuntimeVersion */
   SpVersionRuntimeVersion: {
     specName: "Text",
     implName: "Text",
@@ -382,7 +382,7 @@ export default {
       },
     },
   },
-  /** Lookup73: sp_consensus_aura::sr25519::app_sr25519::Public */
+  /** Lookup73: mp_consensus_aura::sr25519::app_sr25519::Public */
   SpConsensusAuraSr25519AppSr25519Public: "SpCoreSr25519Public",
   /** Lookup74: sp_core::sr25519::Public */
   SpCoreSr25519Public: "[u8;32]",
@@ -425,12 +425,12 @@ export default {
       },
     },
   },
-  /** Lookup82: sp_consensus_grandpa::EquivocationProof<primitive_types::H256, N> */
+  /** Lookup82: mp_consensus_grandpa::EquivocationProof<primitive_types::H256, N> */
   SpConsensusGrandpaEquivocationProof: {
     setId: "u64",
     equivocation: "SpConsensusGrandpaEquivocation",
   },
-  /** Lookup83: sp_consensus_grandpa::Equivocation<primitive_types::H256, N> */
+  /** Lookup83: mp_consensus_grandpa::Equivocation<primitive_types::H256, N> */
   SpConsensusGrandpaEquivocation: {
     _enum: {
       Prevote: "FinalityGrandpaEquivocationPrevote",
@@ -438,9 +438,9 @@ export default {
     },
   },
   /**
-   * Lookup84: finality_grandpa::Equivocation<sp_consensus_grandpa::app::Public,
+   * Lookup84: finality_grandpa::Equivocation<mp_consensus_grandpa::app::Public,
    * finality_grandpa::Prevote<primitive_types::H256, N>,
-   * sp_consensus_grandpa::app::Signature>
+   * mp_consensus_grandpa::app::Signature>
    */
   FinalityGrandpaEquivocationPrevote: {
     roundNumber: "u64",
@@ -453,14 +453,14 @@ export default {
     targetHash: "H256",
     targetNumber: "u32",
   },
-  /** Lookup86: sp_consensus_grandpa::app::Signature */
+  /** Lookup86: mp_consensus_grandpa::app::Signature */
   SpConsensusGrandpaAppSignature: "SpCoreEd25519Signature",
   /** Lookup87: sp_core::ed25519::Signature */
   SpCoreEd25519Signature: "[u8;64]",
   /**
-   * Lookup90: finality_grandpa::Equivocation<sp_consensus_grandpa::app::Public,
+   * Lookup90: finality_grandpa::Equivocation<mp_consensus_grandpa::app::Public,
    * finality_grandpa::Precommit<primitive_types::H256, N>,
-   * sp_consensus_grandpa::app::Signature>
+   * mp_consensus_grandpa::app::Signature>
    */
   FinalityGrandpaEquivocationPrecommit: {
     roundNumber: "u64",

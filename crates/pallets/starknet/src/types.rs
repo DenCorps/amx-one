@@ -29,16 +29,7 @@ pub type StorageSlotWrapper = (StorageKeyWrapper, Felt252Wrapper);
 pub type StateTrie = StateCommitmentTree<PedersenHasher>;
 
 /// Declare Transaction Output
-#[derive(
-    Clone,
-    Debug,
-    PartialEq,
-    Eq,
-    scale_codec::Encode,
-    scale_codec::Decode,
-    scale_info::TypeInfo,
-    scale_codec::MaxEncodedLen,
-)]
+#[derive(Clone, Debug, PartialEq, Eq, codec::Encode, codec::Decode, scale_info::TypeInfo, codec::MaxEncodedLen)]
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
 pub struct DeployAccountTransactionOutput {
     /// Transaction hash
@@ -49,7 +40,7 @@ pub struct DeployAccountTransactionOutput {
 
 /// State Commitments
 /// TODO: Make hashers configurable in runtime config
-#[derive(Default, Clone, scale_codec::Encode, scale_codec::Decode, scale_info::TypeInfo)]
+#[derive(Default, Clone, codec::Encode, codec::Decode, scale_info::TypeInfo)]
 pub struct StateCommitments {
     /// Storage Commitment
     pub storage_commitment: StateCommitmentTree<PedersenHasher>,

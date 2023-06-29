@@ -2,10 +2,10 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use core::str::Utf8Error;
 
+use codec::{Decode, Encode};
 use mp_runtime::offchain::http::Error;
 use mp_runtime::offchain::HttpError;
 use mp_runtime::DispatchError;
-use scale_codec::{Decode, Encode};
 use serde::Deserialize;
 
 use crate::message::Message;

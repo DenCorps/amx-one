@@ -10,16 +10,19 @@ use futures::prelude::*;
 use madara_runtime::opaque::Block;
 use madara_runtime::{self, Hash, RuntimeApi};
 use mc_block_proposer::ProposerFactory;
+use mc_client_api::{Backend, BlockBackend, BlockchainEvents, HeaderBackend};
 use mc_mapping_sync::MappingSyncWorker;
 use mc_storage::overrides_handle;
 use mc_transaction_pool::FullPool;
+use mp_api::offchain::OffchainStorage;
+use mp_api::{ConstructRuntimeApi, ProvideRuntimeApi, TransactionFor};
+use mp_consensus_aura::sr25519::AuthorityPair as AuraPair;
 use mp_runtime::traits::BlakeTwo256;
 use mp_starknet::sequencer_address::{
     InherentDataProvider as SeqAddrInherentDataProvider, DEFAULT_SEQUENCER_ADDRESS, SEQ_ADDR_STORAGE_KEY,
 };
 use pallet_starknet::runtime_api::StarknetRuntimeApi;
 use prometheus_endpoint::Registry;
-use sc_client_api::{Backend, BlockBackend, BlockchainEvents, HeaderBackend};
 use sc_consensus::BasicQueue;
 use sc_consensus_aura::{SlotProportion, StartAuraParams};
 use sc_consensus_grandpa::{GrandpaBlockImport, SharedVoterState};
@@ -27,9 +30,6 @@ pub use sc_executor::NativeElseWasmExecutor;
 use sc_service::error::Error as ServiceError;
 use sc_service::{Configuration, TaskManager, WarpSyncParams};
 use sc_telemetry::{Telemetry, TelemetryHandle, TelemetryWorker};
-use sp_api::offchain::OffchainStorage;
-use sp_api::{ConstructRuntimeApi, ProvideRuntimeApi, TransactionFor};
-use sp_consensus_aura::sr25519::AuthorityPair as AuraPair;
 use sp_offchain::STORAGE_PREFIX;
 use sp_trie::PrefixedMemoryDB;
 
@@ -177,7 +177,7 @@ where
 
     let create_inherent_data_providers = move |_, ()| async move {
         let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
-        let slot = sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+        let slot = mp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
             *timestamp,
             slot_duration,
         );
@@ -390,7 +390,7 @@ pub fn new_full(config: Configuration, sealing: Option<Sealing>) -> Result<TaskM
                 async move {
                     let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
 
-                    let slot = sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+                    let slot = mp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
                         *timestamp,
                         slot_duration,
                     );

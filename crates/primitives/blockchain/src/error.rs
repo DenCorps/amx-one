@@ -19,10 +19,10 @@
 
 use std::{self, result};
 
-use scale_codec::Error as CodecError;
+use codec::Error as CodecError;
+use mp_api::ApiError;
 use mp_runtime::transaction_validity::TransactionValidityError;
-use sp_api::ApiError;
-use {sp_consensus, sp_state_machine};
+use {mp_consensus, sp_state_machine};
 
 /// Client Result type alias
 pub type Result<T> = result::Result<T, Error>;
@@ -51,7 +51,7 @@ pub enum Error {
     OneShotCancelled(#[from] futures::channel::oneshot::Canceled),
 
     #[error(transparent)]
-    Consensus(#[from] sp_consensus::Error),
+    Consensus(#[from] mp_consensus::Error),
 
     #[error("Backend error: {0}")]
     Backend(String),

@@ -41,16 +41,16 @@ use futures::prelude::*;
 pub use graph::base_pool::Limit as PoolLimit;
 pub use graph::{ChainApi, Options, Pool, Transaction, ValidatedTransaction};
 use graph::{ExtrinsicHash, IsValidator};
+use mc_transaction_pool_api::error::Error as TxPoolError;
+use mc_transaction_pool_api::{
+    ChainEvent, ImportNotificationStream, MaintainedTransactionPool, PoolFuture, PoolStatus, ReadyTransactions,
+    TransactionFor, TransactionPool, TransactionSource, TransactionStatusStreamFor, TxHash,
+};
 use mp_blockchain::{HashAndNumber, TreeRoute};
 use mp_runtime::generic::BlockId;
 use mp_runtime::traits::{AtLeast32Bit, Block as BlockT, Extrinsic, Header as HeaderT, NumberFor, Zero};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use sc_transaction_pool_api::error::Error as TxPoolError;
-use sc_transaction_pool_api::{
-    ChainEvent, ImportNotificationStream, MaintainedTransactionPool, PoolFuture, PoolStatus, ReadyTransactions,
-    TransactionFor, TransactionPool, TransactionSource, TransactionStatusStreamFor, TxHash,
-};
 use sp_core::traits::SpawnEssentialNamed;
 
 pub use crate::api::FullChainApi;
@@ -342,17 +342,17 @@ where
 impl<Block, Client> FullPool<Block, Client>
 where
     Block: BlockT,
-    Client: sp_api::ProvideRuntimeApi<Block>
-        + sc_client_api::BlockBackend<Block>
-        + sc_client_api::blockchain::HeaderBackend<Block>
+    Client: mp_api::ProvideRuntimeApi<Block>
+        + mc_client_api::BlockBackend<Block>
+        + mc_client_api::blockchain::HeaderBackend<Block>
         + mp_runtime::traits::BlockIdTo<Block>
-        + sc_client_api::ExecutorProvider<Block>
-        + sc_client_api::UsageProvider<Block>
+        + mc_client_api::ExecutorProvider<Block>
+        + mc_client_api::UsageProvider<Block>
         + mp_blockchain::HeaderMetadata<Block, Error = mp_blockchain::Error>
         + Send
         + Sync
         + 'static,
-    Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+    Client::Api: mp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {
     /// Create new basic transaction pool for a full node with the provided api.
     pub fn new_full(
@@ -382,16 +382,16 @@ where
     }
 }
 
-impl<Block, Client> sc_transaction_pool_api::LocalTransactionPool for BasicPool<FullChainApi<Client, Block>, Block>
+impl<Block, Client> mc_transaction_pool_api::LocalTransactionPool for BasicPool<FullChainApi<Client, Block>, Block>
 where
     Block: BlockT,
-    Client: sp_api::ProvideRuntimeApi<Block>
-        + sc_client_api::BlockBackend<Block>
-        + sc_client_api::blockchain::HeaderBackend<Block>
+    Client: mp_api::ProvideRuntimeApi<Block>
+        + mc_client_api::BlockBackend<Block>
+        + mc_client_api::blockchain::HeaderBackend<Block>
         + mp_runtime::traits::BlockIdTo<Block>
         + mp_blockchain::HeaderMetadata<Block, Error = mp_blockchain::Error>,
     Client: Send + Sync + 'static,
-    Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+    Client::Api: mp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {
     type Block = Block;
     type Hash = graph::ExtrinsicHash<FullChainApi<Client, Block>>;
@@ -400,7 +400,7 @@ where
     fn submit_local(
         &self,
         at: &BlockId<Self::Block>,
-        xt: sc_transaction_pool_api::LocalTransactionFor<Self>,
+        xt: mc_transaction_pool_api::LocalTransactionFor<Self>,
     ) -> Result<Self::Hash, Self::Error> {
         use mp_runtime::traits::SaturatedConversion;
         use mp_runtime::transaction_validity::TransactionValidityError;
@@ -717,7 +717,7 @@ where
 pub async fn notification_future<Client, Pool, Block>(client: Arc<Client>, txpool: Arc<Pool>)
 where
     Block: BlockT,
-    Client: sc_client_api::BlockchainEvents<Block>,
+    Client: mc_client_api::BlockchainEvents<Block>,
     Pool: MaintainedTransactionPool<Block = Block>,
 {
     let import_stream = client.import_notification_stream().filter_map(|n| ready(n.try_into().ok())).fuse();

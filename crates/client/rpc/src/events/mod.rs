@@ -6,8 +6,10 @@ use std::vec::IntoIter;
 
 use jsonrpsee::core::RpcResult;
 use log::error;
+use mc_client_api::backend::{Backend, StorageProvider};
 use mc_rpc_core::utils::get_block_by_block_hash;
 use mc_transaction_pool::ChainApi;
+use mp_api::ProvideRuntimeApi;
 use mp_blockchain::HeaderBackend;
 use mp_runtime::traits::Block as BlockT;
 use mp_starknet::block::Block;
@@ -16,8 +18,6 @@ use mp_starknet::traits::hash::HasherT;
 use mp_starknet::traits::ThreadSafeCopy;
 use mp_starknet::transaction::types::EventWrapper;
 use pallet_starknet::runtime_api::{ConvertTransactionRuntimeApi, StarknetRuntimeApi};
-use sc_client_api::backend::{Backend, StorageProvider};
-use sp_api::ProvideRuntimeApi;
 use starknet_core::types::{BlockId, EventsPage};
 use starknet_ff::FieldElement;
 

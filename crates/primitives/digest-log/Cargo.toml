@@ -9,7 +9,7 @@ repository = { workspace = true }
 
 [dependencies]
 mp-starknet = { workspace = true }
-scale-codec = { package = "parity-scale-codec", workspace = true, default-features = false }
+codec = { package = "parity-scale-codec", workspace = true, default-features = false }
 # Substrate
 mp-runtime = { workspace = true }
 
@@ -18,4 +18,4 @@ assert_matches = "1.5.0"
 
 [features]
 default = ["std"]
-std = ["mp-starknet/std", "scale-codec/std", "mp-runtime/std"]
+std = ["mp-starknet/std", "codec/std", "mp-runtime/std"]

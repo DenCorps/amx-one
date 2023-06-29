@@ -18,10 +18,10 @@
 
 //! Substrate transaction pool implementation.
 
+use mc_transaction_pool_api::ChainEvent;
 use mp_blockchain::TreeRoute;
 use mp_runtime::traits::{Block as BlockT, NumberFor};
 use num_traits::CheckedSub;
-use sc_transaction_pool_api::ChainEvent;
 
 use crate::LOG_TARGET;
 

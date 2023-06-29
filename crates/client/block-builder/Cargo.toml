@@ -1,0 +1,37 @@
+[package]
+name = "mc-block-builder"
+version = "0.10.0-dev"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2021"
+license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+homepage = "https://substrate.io"
+repository = "https://github.com/paritytech/substrate/"
+description = "Substrate block builder"
+readme = "README.md"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+
+# Madara primitives
+mp-api = {workspace = true}
+mp-block-builder = {workspace = true}
+
+# Madara client
+mc-client-api = {workspace = true}
+
+# Substrate primitives
+mp-blockchain = {workspace = true}
+sp-core = {workspace = true}
+sp-inherents = {workspace = true}
+mp-runtime = {workspace = true}
+
+# Third party dependencies
+codec = { package = "parity-scale-codec", version = "3.2.2", features = [
+	"derive",
+] }
+
+[dev-dependencies]
+sp-state-machine = {workspace = true}
+substrate-test-runtime-client = {workspace = true}

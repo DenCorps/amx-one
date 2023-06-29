@@ -1,12 +1,12 @@
+use mc_client_api::backend::{Backend, StorageProvider};
 use mc_rpc_core::utils::get_block_by_block_hash;
+use mp_api::ProvideRuntimeApi;
 use mp_blockchain::{Backend as _, HeaderBackend};
 use mp_digest_log::{find_starknet_block, FindLogError};
 use mp_runtime::traits::{Block as BlockT, Header as HeaderT, Zero};
 use mp_starknet::traits::hash::HasherT;
 use mp_starknet::traits::ThreadSafeCopy;
 use pallet_starknet::runtime_api::StarknetRuntimeApi;
-use sc_client_api::backend::{Backend, StorageProvider};
-use sp_api::ProvideRuntimeApi;
 use sp_core::H256;
 
 fn sync_block<B: BlockT, C, BE, H>(

@@ -1,5 +1,5 @@
 //! Block proposer implementation.
-//! This crate implements the [`sp_consensus::Proposer`] trait.
+//! This crate implements the [`mp_consensus::Proposer`] trait.
 //! It is used to build blocks for the block authoring node.
 //! The block authoring node is the node that is responsible for building new blocks.
 use std::marker::PhantomData;
@@ -12,18 +12,18 @@ use futures::channel::oneshot;
 use futures::future::{Future, FutureExt};
 use futures::{future, select};
 use log::{debug, error, info, trace, warn};
+use mc_block_builder::{BlockBuilderApi, BlockBuilderProvider};
+use mc_client_api::backend;
+use mc_transaction_pool_api::{InPoolTransaction, TransactionPool};
+use mp_api::{ApiExt, ProvideRuntimeApi};
 use mp_blockchain::ApplyExtrinsicFailed::Validity;
 use mp_blockchain::Error::ApplyExtrinsicFailed;
 use mp_blockchain::HeaderBackend;
 use mp_runtime::traits::{Block as BlockT, Header as HeaderT};
 use mp_runtime::{Digest, Percent, SaturatedConversion};
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use sc_block_builder::{BlockBuilderApi, BlockBuilderProvider};
-use sc_client_api::backend;
 use sc_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
-use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
-use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_consensus::{DisableProofRecording, ProofRecording, Proposal};
+use mp_consensus::{DisableProofRecording, ProofRecording, Proposal};
 use sp_core::traits::SpawnNamed;
 use sp_inherents::InherentData;
 
@@ -56,7 +56,7 @@ pub struct ProposerFactory<A, B, C, PR> {
     metrics: PrometheusMetrics,
     /// The default block size limit.
     ///
-    /// If no `block_size_limit` is passed to [`sp_consensus::Proposer::propose`], this block size
+    /// If no `block_size_limit` is passed to [`mp_consensus::Proposer::propose`], this block size
     /// limit will be used.
     default_block_size_limit: usize,
     /// Soft deadline percentage of hard deadline.
@@ -100,7 +100,7 @@ impl<A, B, C, PR> ProposerFactory<A, B, C, PR> {
     /// The default value for the block size limit is:
     /// [`DEFAULT_BLOCK_SIZE_LIMIT`].
     ///
-    /// If there is no block size limit passed to [`sp_consensus::Proposer::propose`], this value
+    /// If there is no block size limit passed to [`mp_consensus::Proposer::propose`], this value
     /// will be used.
     pub fn set_default_block_size_limit(&mut self, limit: usize) {
         self.default_block_size_limit = limit;
@@ -157,7 +157,7 @@ where
     }
 }
 
-impl<A, B, Block, C, PR> sp_consensus::Environment<Block> for ProposerFactory<A, B, C, PR>
+impl<A, B, Block, C, PR> mp_consensus::Environment<Block> for ProposerFactory<A, B, C, PR>
 where
     A: TransactionPool<Block = Block> + 'static,
     B: backend::Backend<Block> + Send + Sync + 'static,
@@ -189,7 +189,7 @@ pub struct Proposer<B, Block: BlockT, C, A: TransactionPool, PR> {
     _phantom: PhantomData<(B, PR)>,
 }
 
-impl<A, B, Block, C, PR> sp_consensus::Proposer<Block> for Proposer<B, Block, C, A, PR>
+impl<A, B, Block, C, PR> mp_consensus::Proposer<Block> for Proposer<B, Block, C, A, PR>
 where
     A: TransactionPool<Block = Block> + 'static,
     B: backend::Backend<Block> + Send + Sync + 'static,
@@ -333,7 +333,7 @@ where
     /// builder.
     fn apply_inherents(
         &self,
-        block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C, B>,
+        block_builder: &mut mc_block_builder::BlockBuilder<'_, Block, C, B>,
         inherent_data: InherentData,
     ) -> Result<(), mp_blockchain::Error> {
         let create_inherents_start = time::Instant::now();
@@ -376,7 +376,7 @@ where
     /// This function will return an error if the block cannot be built.
     async fn apply_extrinsics(
         &self,
-        block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C, B>,
+        block_builder: &mut mc_block_builder::BlockBuilder<'_, Block, C, B>,
         deadline: time::Instant,
         block_size_limit: Option<usize>,
     ) -> Result<EndProposingReason, mp_blockchain::Error> {
@@ -455,7 +455,7 @@ where
             }
 
             trace!(target: LOG_TARGET, "[{:?}] Pushing to the block.", pending_tx_hash);
-            match sc_block_builder::BlockBuilder::push(block_builder, pending_tx_data) {
+            match mc_block_builder::BlockBuilder::push(block_builder, pending_tx_data) {
                 Ok(()) => {
                     transaction_pushed = true;
                     debug!(target: LOG_TARGET, "[{:?}] Pushed to the block.", pending_tx_hash);

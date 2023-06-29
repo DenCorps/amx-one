@@ -43,8 +43,8 @@ mod reexport_private_types {
         serializer: SE,
     ) -> Result<SE::Ok, SE::Error>
     where
-        K: scale_codec::Decode + Ord + Serialize + Clone,
-        V: scale_codec::Decode + Serialize + Clone,
+        K: codec::Decode + Ord + Serialize + Clone,
+        V: codec::Decode + Serialize + Clone,
         S: Get<u32>,
     {
         v.clone().into_inner().serialize(serializer)
@@ -57,8 +57,8 @@ mod reexport_private_types {
         serializer: SE,
     ) -> Result<SE::Ok, SE::Error>
     where
-        K: scale_codec::Decode + Ord + Serialize + Clone,
-        V: scale_codec::Decode + Serialize + Clone,
+        K: codec::Decode + Ord + Serialize + Clone,
+        V: codec::Decode + Serialize + Clone,
         S: Get<u32>,
     {
         v.clone().map(|val| val.into_inner()).serialize(serializer)
@@ -70,8 +70,8 @@ mod reexport_private_types {
         deserializer: D,
     ) -> Result<BoundedBTreeMap<K, V, S>, D::Error>
     where
-        K: scale_codec::Decode + Ord + Deserialize<'de>,
-        V: scale_codec::Decode + Deserialize<'de>,
+        K: codec::Decode + Ord + Deserialize<'de>,
+        V: codec::Decode + Deserialize<'de>,
         S: Get<u32>,
     {
         let btree_map = BTreeMap::deserialize(deserializer)?;
@@ -85,8 +85,8 @@ mod reexport_private_types {
         deserializer: D,
     ) -> Result<Option<BoundedBTreeMap<K, V, S>>, D::Error>
     where
-        K: scale_codec::Decode + Ord + Deserialize<'de>,
-        V: scale_codec::Decode + Deserialize<'de>,
+        K: codec::Decode + Ord + Deserialize<'de>,
+        V: codec::Decode + Deserialize<'de>,
         S: Get<u32>,
     {
         let opt_btree_map = Option::<BTreeMap<K, V>>::deserialize(deserializer)?;

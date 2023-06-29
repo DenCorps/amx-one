@@ -1,9 +1,9 @@
+use codec::{Decode, Encode};
 use frame_support::BoundedVec;
 use mp_starknet::execution::types::{
     CallEntryPointWrapper, ContractAddressWrapper, EntryPointTypeWrapper, Felt252Wrapper,
 };
 use mp_starknet::transaction::types::Transaction;
-use scale_codec::{Decode, Encode};
 use serde::Deserialize;
 
 use crate::alloc::format;

@@ -19,11 +19,11 @@ mod error;
 #[cfg(test)]
 mod tests;
 
+use codec::{Decode, Encode};
 pub use error::FindLogError;
 use mp_runtime::generic::{Digest, OpaqueDigestItemId};
 use mp_runtime::ConsensusEngineId;
 use mp_starknet::block::Block as StarknetBlock;
-use scale_codec::{Decode, Encode};
 
 pub const MADARA_ENGINE_ID: ConsensusEngineId = [b'm', b'a', b'd', b'a'];
 

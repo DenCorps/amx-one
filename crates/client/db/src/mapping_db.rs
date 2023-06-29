@@ -1,9 +1,9 @@
 use std::marker::PhantomData;
 use std::sync::{Arc, Mutex};
 
-use mp_runtime::traits::Block as BlockT;
 // Substrate
-use scale_codec::{Decode, Encode};
+use codec::{Decode, Encode};
+use mp_runtime::traits::Block as BlockT;
 use sp_core::H256;
 use sp_database::Database;
 

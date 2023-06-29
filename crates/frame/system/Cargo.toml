@@ -1,0 +1,63 @@
+[package]
+name = "frame-system"
+version = "4.0.0-dev"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2021"
+license = "Apache-2.0"
+homepage = "https://substrate.io"
+repository = "https://github.com/paritytech/substrate/"
+description = "FRAME system module"
+readme = "README.md"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+
+# Madara primitives
+frame-support = { workspace = true}
+mp-runtime = { workspace = true}
+mp-version ={ workspace = true}
+
+# Substrate primitives
+sp-core = { workspace = true}
+sp-io = { workspace = true}
+sp-std = { workspace = true}
+sp-weights = { workspace = true}
+
+# Third party dependencies
+cfg-if = {workspace = true}
+codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = ["derive"] }
+log = {workspace = true}
+scale-info = { version = "2.5.0", default-features = false, features = ["derive"] }
+serde = { workspace = true, features = ["derive"], optional = true }
+
+[dev-dependencies]
+criterion = {workspace = true}
+sp-externalities = {workspace = true}
+substrate-test-runtime-client ={workspace = true}
+
+[features]
+default = ["std"]
+std = [
+	"mp-runtime/std",
+	"mp-version/std",
+	"frame-support/std",
+	"codec/std",
+	"log/std",
+	"scale-info/std",
+	"serde",
+	"sp-core/std",
+	"sp-io/std",
+	"sp-std/std",
+	"sp-weights/std",
+]
+runtime-benchmarks = [
+	"frame-support/runtime-benchmarks",
+	"mp-runtime/runtime-benchmarks",
+]
+try-runtime = ["frame-support/try-runtime"]
+
+[[bench]]
+name = "bench"
+harness = false

@@ -7,7 +7,7 @@ pub mod pedersen;
 pub mod poseidon;
 
 /// Available hashers in the StarkNet protocol.
-#[derive(Clone, Copy, scale_codec::Encode, scale_codec::Decode, scale_info::TypeInfo)]
+#[derive(Clone, Copy, codec::Encode, codec::Decode, scale_info::TypeInfo)]
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
 pub enum Hasher {
     /// The Pedersen hash function.

@@ -22,9 +22,10 @@ mp-blockchain = { workspace = true, default-features = true }
 mp-digest-log = { workspace = true }
 mp-runtime = { workspace = true, default-features = true }
 mp-starknet = { workspace = true, default-features = true }
+frame-support = { workspace = true }
 
 # Subtrate primitives
-sp-api = { workspace = true, default-features = true }
+mp-api = { workspace = true, default-features = true }
 sp-core = { workspace = true }
 
 # Starknet dependencies
@@ -36,7 +37,6 @@ starknet_api = { workspace = true, default-features = false }
 # Third party dependencies
 anyhow = { workspace = true }
 flate2 = { workspace = true }
-frame-support = { workspace = true }
 hex = { workspace = true, default-features = true }
 jsonrpsee = { workspace = true, features = [
   "server",

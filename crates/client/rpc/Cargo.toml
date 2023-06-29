@@ -28,17 +28,17 @@ mc-transaction-pool = { workspace = true }
 # Madara primitives
 mp-blockchain = { workspace = true, default-features = true }
 mp-starknet = { workspace = true }
-
-# Substate primitives
 frame-support = { workspace = true }
 frame-system = { workspace = true }
 mp-runtime = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true }
-sp-api = { workspace = true, default-features = true }
+mp-api = { workspace = true, default-features = true }
+
+
+# Substate primitives
 sp-arithmetic = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
 # Substrate client
-sc-client-api = { workspace = true, default-features = true }
+mc-client-api = { workspace = true, default-features = true }
 sc-network-sync = { workspace = true }
 # Starknet
 blockifier = { workspace = true, default-features = false, features = [

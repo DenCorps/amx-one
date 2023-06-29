@@ -26,78 +26,76 @@
 pub struct RuntimeLogger;
 
 impl RuntimeLogger {
-	/// Initialize the logger.
-	///
-	/// This is a no-op when running natively (`std`).
-	#[cfg(feature = "std")]
-	pub fn init() {}
+    /// Initialize the logger.
+    ///
+    /// This is a no-op when running natively (`std`).
+    #[cfg(feature = "std")]
+    pub fn init() {}
 
-	/// Initialize the logger.
-	///
-	/// This is a no-op when running natively (`std`).
-	#[cfg(not(feature = "std"))]
-	pub fn init() {
-		static LOGGER: RuntimeLogger = RuntimeLogger;
-		let _ = log::set_logger(&LOGGER);
+    /// Initialize the logger.
+    ///
+    /// This is a no-op when running natively (`std`).
+    #[cfg(not(feature = "std"))]
+    pub fn init() {
+        static LOGGER: RuntimeLogger = RuntimeLogger;
+        let _ = log::set_logger(&LOGGER);
 
-		// Use the same max log level as used by the host.
-		log::set_max_level(sp_io::logging::max_level().into());
-	}
+        // Use the same max log level as used by the host.
+        log::set_max_level(sp_io::logging::max_level().into());
+    }
 }
 
 impl log::Log for RuntimeLogger {
-	fn enabled(&self, _: &log::Metadata) -> bool {
-		// The final filtering is done by the host. This is not perfect, as we would still call into
-		// the host for log lines that will be thrown away.
-		true
-	}
+    fn enabled(&self, _: &log::Metadata) -> bool {
+        // The final filtering is done by the host. This is not perfect, as we would still call into
+        // the host for log lines that will be thrown away.
+        true
+    }
 
-	fn log(&self, record: &log::Record) {
-		use sp_std::fmt::Write;
-		let mut w = sp_std::Writer::default();
-		let _ = ::core::write!(&mut w, "{}", record.args());
+    fn log(&self, record: &log::Record) {
+        use sp_std::fmt::Write;
+        let mut w = sp_std::Writer::default();
+        let _ = ::core::write!(&mut w, "{}", record.args());
 
-		sp_io::logging::log(record.level().into(), record.target(), w.inner());
-	}
+        sp_io::logging::log(record.level().into(), record.target(), w.inner());
+    }
 
-	fn flush(&self) {}
+    fn flush(&self) {}
 }
 
 #[cfg(test)]
 mod tests {
-	use sp_api::ProvideRuntimeApi;
-	use std::{env, str::FromStr};
-	use substrate_test_runtime_client::{
-		runtime::TestAPI, DefaultTestClientBuilderExt, ExecutionStrategy, TestClientBuilder,
-		TestClientBuilderExt,
-	};
+    use std::env;
+    use std::str::FromStr;
 
-	#[test]
-	fn ensure_runtime_logger_respects_host_max_log_level() {
-		if env::var("RUN_TEST").is_ok() {
-			sp_tracing::try_init_simple();
-			log::set_max_level(log::LevelFilter::from_str(&env::var("RUST_LOG").unwrap()).unwrap());
+    use mp_api::ProvideRuntimeApi;
+    use substrate_test_runtime_client::runtime::TestAPI;
+    use substrate_test_runtime_client::{
+        DefaultTestClientBuilderExt, ExecutionStrategy, TestClientBuilder, TestClientBuilderExt,
+    };
 
-			let client = TestClientBuilder::new()
-				.set_execution_strategy(ExecutionStrategy::AlwaysWasm)
-				.build();
-			let runtime_api = client.runtime_api();
-			runtime_api
-				.do_trace_log(client.chain_info().genesis_hash)
-				.expect("Logging should not fail");
-		} else {
-			for (level, should_print) in &[("trace", true), ("info", false)] {
-				let executable = std::env::current_exe().unwrap();
-				let output = std::process::Command::new(executable)
-					.env("RUN_TEST", "1")
-					.env("RUST_LOG", level)
-					.args(&["--nocapture", "ensure_runtime_logger_respects_host_max_log_level"])
-					.output()
-					.unwrap();
+    #[test]
+    fn ensure_runtime_logger_respects_host_max_log_level() {
+        if env::var("RUN_TEST").is_ok() {
+            sp_tracing::try_init_simple();
+            log::set_max_level(log::LevelFilter::from_str(&env::var("RUST_LOG").unwrap()).unwrap());
 
-				let output = String::from_utf8(output.stderr).unwrap();
-				assert!(output.contains("Hey I'm runtime") == *should_print);
-			}
-		}
-	}
+            let client = TestClientBuilder::new().set_execution_strategy(ExecutionStrategy::AlwaysWasm).build();
+            let runtime_api = client.runtime_api();
+            runtime_api.do_trace_log(client.chain_info().genesis_hash).expect("Logging should not fail");
+        } else {
+            for (level, should_print) in &[("trace", true), ("info", false)] {
+                let executable = std::env::current_exe().unwrap();
+                let output = std::process::Command::new(executable)
+                    .env("RUN_TEST", "1")
+                    .env("RUST_LOG", level)
+                    .args(&["--nocapture", "ensure_runtime_logger_respects_host_max_log_level"])
+                    .output()
+                    .unwrap();
+
+                let output = String::from_utf8(output.stderr).unwrap();
+                assert!(output.contains("Hey I'm runtime") == *should_print);
+            }
+        }
+    }
 }

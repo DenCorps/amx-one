@@ -6,10 +6,10 @@
 #![allow(clippy::extra_unused_type_parameters)]
 
 use blockifier::execution::contract_class::ContractClass;
+use mp_api::BlockT;
 use mp_starknet::crypto::hash::Hasher;
 use mp_starknet::execution::types::{ClassHashWrapper, ContractAddressWrapper, Felt252Wrapper, StorageKeyWrapper};
 use mp_starknet::transaction::types::{EventWrapper, Transaction, TxType};
-use sp_api::BlockT;
 pub extern crate alloc;
 use alloc::vec::Vec;
 
@@ -17,7 +17,7 @@ use mp_runtime::DispatchError;
 
 use crate::types::NonceWrapper;
 
-sp_api::decl_runtime_apis! {
+mp_api::decl_runtime_apis! {
     pub trait StarknetRuntimeApi {
         /// Returns the nonce associated with the given address in the given block
         fn nonce(contract_address: ContractAddressWrapper) -> NonceWrapper;

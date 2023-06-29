@@ -27,9 +27,9 @@ log = { workspace = true }
 serde = { workspace = true }
 
 frame-system = { workspace = true }
+mc-client-api = { workspace = true }
 mp-runtime = { workspace = true }
 sc-cli = { workspace = true }
-sc-client-api = { workspace = true }
 sc-consensus = { workspace = true }
 sc-consensus-aura = { workspace = true }
 sc-consensus-grandpa = { workspace = true }
@@ -40,7 +40,7 @@ sc-network = { workspace = true }
 sc-network-sync = { workspace = true }
 sc-service = { workspace = true }
 sc-telemetry = { workspace = true }
-sc-transaction-pool-api = { workspace = true }
+mc-transaction-pool-api = { workspace = true }
 sp-consensus-aura = { workspace = true }
 sp-consensus-grandpa = { workspace = true }
 sp-core = { workspace = true }
@@ -55,8 +55,8 @@ sp-trie = { workspace = true, features = ["default"] }
 jsonrpsee = { workspace = true, features = ["server"] }
 
 # Substrate primitives dependencies
-sp-api = { workspace = true }
-sp-block-builder = { workspace = true }
+mp-api = { workspace = true }
+mp-block-builder = { workspace = true }
 # Substrate client dependencies
 prometheus-endpoint = { package = "substrate-prometheus-endpoint", workspace = true }
 sc-rpc-api = { workspace = true }

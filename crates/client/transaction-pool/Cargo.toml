@@ -18,17 +18,20 @@ targets = ["x86_64-unknown-linux-gnu"]
 mp-blockchain = { workspace = true }
 mp-runtime = { workspace = true }
 
+# Madara client
+mc-transaction-pool-api = { workspace = true }
+
 # Substrate client
-sc-client-api = { workspace = true }
-sc-transaction-pool = { workspace = true }
-sc-transaction-pool-api = { workspace = true }
+mc-client-api = { workspace = true }
 sc-utils = { workspace = true }
+ # FIXME: remove completely this dependency and use mc-transaction-pool everywhere
+sc-transaction-pool = { workspace = true }
 
 # Substrate primitives
-sp-api = { workspace = true }
+mp-api = { workspace = true }
 sp-core = { workspace = true }
 sp-tracing = { workspace = true }
-sp-transaction-pool = { workspace = true }
+mp-transaction-pool = { workspace = true }
 
 # Third party dependencies
 async-trait = { workspace = true }
@@ -39,6 +42,6 @@ log = { workspace = true }
 num-traits = { workspace = true }
 parking_lot = { workspace = true }
 prometheus-endpoint = { workspace = true }
-scale-codec = { workspace = true, default-features = true }
+codec = { workspace = true, default-features = true }
 serde = { workspace = true }
 thiserror = { workspace = true }

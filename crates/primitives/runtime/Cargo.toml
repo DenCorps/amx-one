@@ -14,16 +14,16 @@ readme = "README.md"
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = [
-  "derive",
-  "max-encoded-len",
-] }
 either = { version = "1.5", default-features = false }
 hash256-std-hasher = { version = "0.15.2", default-features = false }
 impl-trait-for-tuples = "0.2.2"
 log = { version = "0.4.17", default-features = false }
 paste = "1.0"
 rand = { version = "0.8.5", optional = true }
+codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = [
+  "derive",
+  "max-encoded-len",
+] }
 scale-info = { version = "2.5.0", default-features = false, features = [
   "derive",
 ] }
@@ -61,6 +61,7 @@ std = [
 # Serde support without relying on std features.
 serde = [
   "dep:serde",
+  "codec/serde",
   "scale-info/serde",
   "sp-application-crypto/serde",
   "sp-arithmetic/serde",

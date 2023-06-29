@@ -21,9 +21,9 @@ use std::sync::Arc;
 use std::{cmp, hash};
 
 use log::{debug, trace};
+use mc_transaction_pool_api::error;
 use mp_runtime::traits::Member;
 use mp_runtime::transaction_validity::TransactionTag as Tag;
-use sc_transaction_pool_api::error;
 use serde::Serialize;
 
 use super::base_pool::Transaction;
@@ -471,7 +471,7 @@ impl<Hash: hash::Hash + Member, Ex> BestIterator<Hash, Ex> {
     }
 }
 
-impl<Hash: hash::Hash + Member, Ex> sc_transaction_pool_api::ReadyTransactions for BestIterator<Hash, Ex> {
+impl<Hash: hash::Hash + Member, Ex> mc_transaction_pool_api::ReadyTransactions for BestIterator<Hash, Ex> {
     fn report_invalid(&mut self, tx: &Self::Item) {
         BestIterator::report_invalid(self, tx)
     }

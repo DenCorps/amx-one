@@ -155,7 +155,7 @@ use mp_runtime::DispatchError;
 
 // /!\ You should be using runtime types here.
 
-sp_api::decl_runtime_apis! {
+mp_api::decl_runtime_apis! {
     pub trait StarknetRuntimeApi {
         /// Returns a `Call` response.
         fn call(address: ContractAddressWrapper, function_selector: Felt252Wrapper, calldata: Vec<Felt252Wrapper>) -> Result<Vec<Felt252Wrapper>, DispatchError>;
