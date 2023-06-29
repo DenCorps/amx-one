@@ -26,6 +26,7 @@ use futures::channel::{mpsc, oneshot};
 use futures::future::{ready, Future, FutureExt, Ready};
 use futures::lock::Mutex;
 use futures::{SinkExt, StreamExt};
+use mp_blockchain::{HeaderMetadata, TreeRoute};
 use mp_runtime::generic::BlockId;
 use mp_runtime::traits::{self, Block as BlockT, BlockIdTo};
 use mp_runtime::transaction_validity::{TransactionSource, TransactionValidity};
@@ -34,7 +35,6 @@ use sc_client_api::blockchain::HeaderBackend;
 use sc_client_api::BlockBackend;
 use scale_codec::Encode;
 use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_blockchain::{HeaderMetadata, TreeRoute};
 use sp_core::traits::SpawnEssentialNamed;
 use sp_transaction_pool::runtime_api::TaggedTransactionQueue;
 
@@ -111,7 +111,7 @@ where
         + BlockBackend<Block>
         + BlockIdTo<Block>
         + HeaderBackend<Block>
-        + HeaderMetadata<Block, Error = sp_blockchain::Error>,
+        + HeaderMetadata<Block, Error = mp_blockchain::Error>,
     Client: Send + Sync + 'static,
     Client::Api: TaggedTransactionQueue<Block>,
 {
@@ -185,7 +185,7 @@ where
         from: <Self::Block as BlockT>::Hash,
         to: <Self::Block as BlockT>::Hash,
     ) -> Result<TreeRoute<Self::Block>, Self::Error> {
-        sp_blockchain::tree_route::<Block, Client>(&*self.client, from, to).map_err(Into::into)
+        mp_blockchain::tree_route::<Block, Client>(&*self.client, from, to).map_err(Into::into)
     }
 }
 
@@ -203,7 +203,7 @@ where
         + BlockBackend<Block>
         + BlockIdTo<Block>
         + HeaderBackend<Block>
-        + HeaderMetadata<Block, Error = sp_blockchain::Error>,
+        + HeaderMetadata<Block, Error = mp_blockchain::Error>,
     Client: Send + Sync + 'static,
     Client::Api: TaggedTransactionQueue<Block>,
 {
@@ -268,7 +268,7 @@ where
         + BlockBackend<Block>
         + BlockIdTo<Block>
         + HeaderBackend<Block>
-        + HeaderMetadata<Block, Error = sp_blockchain::Error>,
+        + HeaderMetadata<Block, Error = mp_blockchain::Error>,
     Client: Send + Sync + 'static,
     Client::Api: TaggedTransactionQueue<Block>,
 {

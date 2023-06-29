@@ -1,9 +1,9 @@
 use mc_rpc_core::utils::get_block_by_block_hash;
+use mp_blockchain::HeaderBackend;
 use mp_runtime::traits::{Block as BlockT, Header as HeaderT};
 use mp_starknet::block::Block;
 use sc_client_api::backend::{Backend, StorageProvider};
 use sp_api::BlockId;
-use sp_blockchain::HeaderBackend;
 use sp_core::H256;
 
 use crate::errors::StarknetRpcApiError;

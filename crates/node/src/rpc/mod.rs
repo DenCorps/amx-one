@@ -13,6 +13,7 @@ use jsonrpsee::RpcModule;
 use madara_runtime::opaque::Block;
 use madara_runtime::{AccountId, Hash, Index};
 use mc_transaction_pool::{ChainApi, Pool};
+use mp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use pallet_starknet::runtime_api::StarknetRuntimeApi;
 use sc_client_api::{Backend, StorageProvider};
 use sc_consensus_manual_seal::rpc::EngineCommand;
@@ -20,7 +21,6 @@ pub use sc_rpc_api::DenyUnsafe;
 use sc_transaction_pool_api::TransactionPool;
 use sp_api::ProvideRuntimeApi;
 use sp_block_builder::BlockBuilder;
-use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 pub use starknet::StarknetDeps;
 
 /// Full client dependencies.

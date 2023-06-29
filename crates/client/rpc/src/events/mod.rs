@@ -8,6 +8,7 @@ use jsonrpsee::core::RpcResult;
 use log::error;
 use mc_rpc_core::utils::get_block_by_block_hash;
 use mc_transaction_pool::ChainApi;
+use mp_blockchain::HeaderBackend;
 use mp_runtime::traits::Block as BlockT;
 use mp_starknet::block::Block;
 use mp_starknet::execution::types::Felt252Wrapper;
@@ -17,7 +18,6 @@ use mp_starknet::transaction::types::EventWrapper;
 use pallet_starknet::runtime_api::{ConvertTransactionRuntimeApi, StarknetRuntimeApi};
 use sc_client_api::backend::{Backend, StorageProvider};
 use sp_api::ProvideRuntimeApi;
-use sp_blockchain::HeaderBackend;
 use starknet_core::types::{BlockId, EventsPage};
 use starknet_ff::FieldElement;
 

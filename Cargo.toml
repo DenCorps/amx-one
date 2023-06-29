@@ -6,6 +6,8 @@ members = [
   "crates/primitives/starknet",
   "crates/primitives/digest-log",
   "crates/primitives/runtime",
+  "crates/primitives/blockchain",
+  "crates/client/block-proposer",
   "crates/client/db",
   "crates/client/rpc-core",
   "crates/client/rpc",
@@ -44,7 +46,6 @@ sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "polk
 sp-inherents = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-api = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
-sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-block-builder = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-offchain = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-session = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
@@ -56,7 +57,7 @@ sp-storage = { git = "https://github.com/paritytech/substrate", branch = "polkad
 sp-state-machine = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-trie = { version = "7.0.0", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
-sp-application-crypto = { version = "7.0.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43"  }
+sp-application-crypto = { version = "7.0.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 sp-weights = { version = "4.0.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 
 # Substrate client dependencies
@@ -104,6 +105,7 @@ pallet-starknet = { path = "crates/pallets/starknet", default-features = false }
 mp-starknet = { path = "crates/primitives/starknet", default-features = false }
 mp-digest-log = { path = "crates/primitives/digest-log", default-features = false }
 mp-runtime = { path = "crates/primitives/runtime", default-features = false }
+mp-blockchain = { path = "crates/primitives/blockchain", default-features = false }
 
 # Madara client
 mc-mapping-sync = { path = "crates/client/mapping-sync" }
@@ -161,3 +163,4 @@ parking_lot = "0.12.1"
 async-trait = "0.1.68"
 indexmap = { git = "https://github.com/bluss/indexmap", rev = "ca5f848e10c31e80aeaad0720d14aa2f6dd6cfb1", default-features = false }
 num-traits = "0.2.8"
+lru = "0.8.1"

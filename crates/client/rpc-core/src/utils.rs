@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use anyhow::{anyhow, Result};
 use blockifier::execution::contract_class::ContractClass as BlockifierContractClass;
+use mp_blockchain::HeaderBackend;
 use mp_digest_log::find_starknet_block;
 use mp_starknet::block::Block as StarknetBlock;
 use mp_starknet::execution::types::Felt252Wrapper;
@@ -10,7 +11,6 @@ use mp_starknet::transaction::types::{
     Transaction,
 };
 use sp_api::{BlockT, HeaderT};
-use sp_blockchain::HeaderBackend;
 use starknet_api::deprecated_contract_class::{EntryPoint, EntryPointType};
 use starknet_core::types::{
     BroadcastedTransaction, CompressedLegacyContractClass, ContractClass, FieldElement, FromByteArrayError,

@@ -51,8 +51,8 @@ frame-system-benchmarking = { workspace = true, optional = true }
 # Madara Pallets
 pallet-starknet = { workspace = true }
 # Madara Primitives
-mp-starknet = { workspace = true, default-features = false }
 mp-runtime = { workspace = true }
+mp-starknet = { workspace = true, default-features = false }
 # Starknet dependencies
 blockifier = { workspace = true, default-features = false }
 

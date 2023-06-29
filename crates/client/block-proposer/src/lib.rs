@@ -12,6 +12,9 @@ use futures::channel::oneshot;
 use futures::future::{Future, FutureExt};
 use futures::{future, select};
 use log::{debug, error, info, trace, warn};
+use mp_blockchain::ApplyExtrinsicFailed::Validity;
+use mp_blockchain::Error::ApplyExtrinsicFailed;
+use mp_blockchain::HeaderBackend;
 use mp_runtime::traits::{Block as BlockT, Header as HeaderT};
 use mp_runtime::{Digest, Percent, SaturatedConversion};
 use prometheus_endpoint::Registry as PrometheusRegistry;
@@ -20,9 +23,6 @@ use sc_client_api::backend;
 use sc_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
 use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_blockchain::ApplyExtrinsicFailed::Validity;
-use sp_blockchain::Error::ApplyExtrinsicFailed;
-use sp_blockchain::HeaderBackend;
 use sp_consensus::{DisableProofRecording, ProofRecording, Proposal};
 use sp_core::traits::SpawnNamed;
 use sp_inherents::InherentData;
@@ -168,7 +168,7 @@ where
 {
     type CreateProposer = future::Ready<Result<Self::Proposer, Self::Error>>;
     type Proposer = Proposer<B, Block, C, A, PR>;
-    type Error = sp_blockchain::Error;
+    type Error = mp_blockchain::Error;
 
     fn init(&mut self, parent_header: &<Block as BlockT>::Header) -> Self::CreateProposer {
         future::ready(Ok(self.init_with_now(parent_header, Box::new(time::Instant::now))))
@@ -201,7 +201,7 @@ where
     type Transaction = backend::TransactionFor<B, Block>;
     type Proposal =
         Pin<Box<dyn Future<Output = Result<Proposal<Block, Self::Transaction, PR::Proof>, Self::Error>> + Send>>;
-    type Error = sp_blockchain::Error;
+    type Error = mp_blockchain::Error;
     type ProofRecording = PR;
     type Proof = PR::Proof;
 
@@ -292,7 +292,7 @@ where
         inherent_digests: Digest,
         deadline: time::Instant,
         block_size_limit: Option<usize>,
-    ) -> Result<Proposal<Block, backend::TransactionFor<B, Block>, PR::Proof>, sp_blockchain::Error> {
+    ) -> Result<Proposal<Block, backend::TransactionFor<B, Block>, PR::Proof>, mp_blockchain::Error> {
         // Start the timer to measure the total time it takes to create the proposal.
         let propose_with_timer = time::Instant::now();
 
@@ -313,7 +313,7 @@ where
         let block_took = block_timer.elapsed();
 
         // Convert the storage proof into the required format.
-        let proof = PR::into_proof(proof).map_err(|e| sp_blockchain::Error::Application(Box::new(e)))?;
+        let proof = PR::into_proof(proof).map_err(|e| mp_blockchain::Error::Application(Box::new(e)))?;
 
         // Print the summary of the proposal.
         self.print_summary(&block, end_reason, block_took, propose_with_timer.elapsed());
@@ -335,7 +335,7 @@ where
         &self,
         block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C, B>,
         inherent_data: InherentData,
-    ) -> Result<(), sp_blockchain::Error> {
+    ) -> Result<(), mp_blockchain::Error> {
         let create_inherents_start = time::Instant::now();
         let inherents = block_builder.create_inherents(inherent_data)?;
         let create_inherents_end = time::Instant::now();
@@ -379,7 +379,7 @@ where
         block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C, B>,
         deadline: time::Instant,
         block_size_limit: Option<usize>,
-    ) -> Result<EndProposingReason, sp_blockchain::Error> {
+    ) -> Result<EndProposingReason, mp_blockchain::Error> {
         // proceed with transactions
         // We calculate soft deadline used only in case we start skipping transactions.
         let now = (self.now)();

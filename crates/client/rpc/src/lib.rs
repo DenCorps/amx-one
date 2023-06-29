@@ -19,6 +19,7 @@ use mc_rpc_core::Felt;
 pub use mc_rpc_core::StarknetRpcApiServer;
 use mc_storage::OverrideHandle;
 use mc_transaction_pool::{ChainApi, Pool};
+use mp_blockchain::HeaderBackend;
 use mp_runtime::generic::BlockId as SPBlockId;
 use mp_runtime::traits::{Block as BlockT, Header as HeaderT};
 use mp_starknet::execution::types::Felt252Wrapper;
@@ -34,7 +35,6 @@ use sc_network_sync::SyncingService;
 use sc_transaction_pool_api::{InPoolTransaction, TransactionPool, TransactionSource};
 use sp_api::{ApiError, ProvideRuntimeApi};
 use sp_arithmetic::traits::UniqueSaturatedInto;
-use sp_blockchain::HeaderBackend;
 use sp_core::H256;
 use starknet_core::types::{
     BlockHashAndNumber, BlockId, BlockStatus, BlockTag, BlockWithTxHashes, BlockWithTxs, BroadcastedDeclareTransaction,

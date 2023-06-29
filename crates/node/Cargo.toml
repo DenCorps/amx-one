@@ -27,6 +27,7 @@ log = { workspace = true }
 serde = { workspace = true }
 
 frame-system = { workspace = true }
+mp-runtime = { workspace = true }
 sc-cli = { workspace = true }
 sc-client-api = { workspace = true }
 sc-consensus = { workspace = true }
@@ -46,7 +47,6 @@ sp-core = { workspace = true }
 sp-inherents = { workspace = true }
 sp-keyring = { workspace = true }
 sp-offchain = { workspace = true }
-mp-runtime = { workspace = true }
 sp-state-machine = { workspace = true }
 sp-timestamp = { workspace = true }
 sp-trie = { workspace = true, features = ["default"] }
@@ -57,7 +57,6 @@ jsonrpsee = { workspace = true, features = ["server"] }
 # Substrate primitives dependencies
 sp-api = { workspace = true }
 sp-block-builder = { workspace = true }
-sp-blockchain = { workspace = true }
 # Substrate client dependencies
 prometheus-endpoint = { package = "substrate-prometheus-endpoint", workspace = true }
 sc-rpc-api = { workspace = true }
@@ -80,6 +79,7 @@ mc-mapping-sync = { workspace = true }
 mc-rpc = { workspace = true }
 mc-storage = { workspace = true }
 mc-transaction-pool = { workspace = true }
+mp-blockchain = { workspace = true }
 mp-starknet = { workspace = true }
 pallet-starknet = { workspace = true }
 starknet-core = { workspace = true }

@@ -41,6 +41,7 @@ use futures::prelude::*;
 pub use graph::base_pool::Limit as PoolLimit;
 pub use graph::{ChainApi, Options, Pool, Transaction, ValidatedTransaction};
 use graph::{ExtrinsicHash, IsValidator};
+use mp_blockchain::{HashAndNumber, TreeRoute};
 use mp_runtime::generic::BlockId;
 use mp_runtime::traits::{AtLeast32Bit, Block as BlockT, Extrinsic, Header as HeaderT, NumberFor, Zero};
 use parking_lot::Mutex;
@@ -50,7 +51,6 @@ use sc_transaction_pool_api::{
     ChainEvent, ImportNotificationStream, MaintainedTransactionPool, PoolFuture, PoolStatus, ReadyTransactions,
     TransactionFor, TransactionPool, TransactionSource, TransactionStatusStreamFor, TxHash,
 };
-use sp_blockchain::{HashAndNumber, TreeRoute};
 use sp_core::traits::SpawnEssentialNamed;
 
 pub use crate::api::FullChainApi;
@@ -348,7 +348,7 @@ where
         + mp_runtime::traits::BlockIdTo<Block>
         + sc_client_api::ExecutorProvider<Block>
         + sc_client_api::UsageProvider<Block>
-        + sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>
+        + mp_blockchain::HeaderMetadata<Block, Error = mp_blockchain::Error>
         + Send
         + Sync
         + 'static,
@@ -389,7 +389,7 @@ where
         + sc_client_api::BlockBackend<Block>
         + sc_client_api::blockchain::HeaderBackend<Block>
         + mp_runtime::traits::BlockIdTo<Block>
-        + sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>,
+        + mp_blockchain::HeaderMetadata<Block, Error = mp_blockchain::Error>,
     Client: Send + Sync + 'static,
     Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {

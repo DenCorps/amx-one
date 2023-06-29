@@ -14,18 +14,31 @@ publish = false
 repository = "https://github.com/keep-starknet-strange/madara"
 
 [dependencies]
-blockifier = { workspace = true, default-features = false }
+# Madara runtime
+madara-runtime = { workspace = true, default-features = true }
+
+# Madara primitives
+mp-blockchain = { workspace = true, default-features = true }
+mp-runtime = { workspace = true, default-features = true }
+mp-starknet = { workspace = true, default-features = true }
+
+# Madara pallets
+pallet-starknet = { workspace = true, default-features = true }
+
+# Substrate client
+sc-client-api = { workspace = true, default-features = true }
+
+# Subtrate primitives
 frame-support = { workspace = true }
 frame-system = { workspace = true }
-madara-runtime = { workspace = true, default-features = true }
-mp-starknet = { workspace = true, default-features = true }
-pallet-starknet = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
-scale-codec = { workspace = true, default-features = true }
 sp-api = { workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
 sp-io = { workspace = true, default-features = true }
-mp-runtime = { workspace = true, default-features = true }
 sp-storage = { workspace = true, default-features = true }
+
+# Starknet dependencies
+blockifier = { workspace = true, default-features = false }
 starknet-core = { workspace = true }
+
+# Third-party dependencies
+scale-codec = { workspace = true, default-features = true }

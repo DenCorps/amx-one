@@ -1,10 +1,10 @@
 use frame_support::parameter_types;
 use frame_support::traits::{ConstU16, ConstU64, GenesisBuild, Hooks};
+use mp_runtime::testing::Header;
+use mp_runtime::traits::{BlakeTwo256, IdentityLookup};
 use mp_starknet::execution::types::Felt252Wrapper;
 use mp_starknet::sequencer_address::DEFAULT_SEQUENCER_ADDRESS;
 use sp_core::H256;
-use sp_runtime::testing::Header;
-use sp_runtime::traits::{BlakeTwo256, IdentityLookup};
 use starknet_core::types::FieldElement;
 use {crate as pallet_starknet, frame_system as system};
 
