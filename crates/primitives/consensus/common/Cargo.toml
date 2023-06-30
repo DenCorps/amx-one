@@ -16,22 +16,22 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 
 # Madara primitives
-mp-runtime = {workspace = true}
+mp-runtime = {workspace = true, default-features = false }
 
 # Substrate primitives
-sp-core = {workspace = true}
-sp-inherents = {workspace = true}
-sp-state-machine = {workspace = true}
+sp-core = {workspace = true, default-features = false }
+sp-inherents = {workspace = true, default-features = false }
+sp-state-machine = {workspace = true, default-features = false }
 
 # Third party dependencies
-async-trait ={workspace = true}
-futures = { workspace = true, features = ["thread-pool"] }
-log = {workspace = true}
-thiserror = {workspace = true}
+async-trait ={workspace = true, default-features = false }
+futures = { workspace = true, features = ["thread-pool"], default-features = false }
+log = {workspace = true, default-features = false }
+thiserror = {workspace = true, default-features = false }
 
 [dev-dependencies]
-futures = {workspace = true}
-sp-test-primitives = {workspace = true}
+futures = {workspace = true, default-features = false }
+sp-test-primitives = {workspace = true, default-features = false }
 
 [features]
 default = []
