@@ -15,49 +15,51 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 
 # Madara primitives
-frame-support = { workspace = true}
-mp-runtime = { workspace = true}
-mp-version ={ workspace = true}
+frame-support = { workspace = true, default-features = false }
+mp-runtime = { workspace = true, default-features = false }
+mp-version = { workspace = true, default-features = false }
 
 # Substrate primitives
-sp-core = { workspace = true}
-sp-io = { workspace = true}
-sp-std = { workspace = true}
-sp-weights = { workspace = true}
+sp-core = { workspace = true, default-features = false }
+sp-io = { workspace = true, default-features = false }
+sp-std = { workspace = true, default-features = false }
+sp-weights = { workspace = true, default-features = false }
 
 # Third party dependencies
-cfg-if = {workspace = true}
-codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = ["derive"] }
-log = {workspace = true}
-scale-info = { version = "2.5.0", default-features = false, features = ["derive"] }
-serde = { workspace = true, features = ["derive"], optional = true }
+cfg-if = { workspace = true, default-features = false }
+codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = [
+  "derive",
+] }
+log = { workspace = true, default-features = false }
+scale-info = { version = "2.5.0", default-features = false, features = [
+  "derive",
+] }
+serde = { workspace = true, features = [
+  "derive",
+], optional = true, default-features = false }
 
 [dev-dependencies]
-criterion = {workspace = true}
-sp-externalities = {workspace = true}
-substrate-test-runtime-client ={workspace = true}
+criterion = { workspace = true, default-features = false }
+sp-externalities = { workspace = true, default-features = false }
+substrate-test-runtime-client = { workspace = true, default-features = false }
 
 [features]
 default = ["std"]
 std = [
-	"mp-runtime/std",
-	"mp-version/std",
-	"frame-support/std",
-	"codec/std",
-	"log/std",
-	"scale-info/std",
-	"serde",
-	"sp-core/std",
-	"sp-io/std",
-	"sp-std/std",
-	"sp-weights/std",
+  "mp-runtime/std",
+  "mp-version/std",
+  "frame-support/std",
+  "codec/std",
+  "log/std",
+  "scale-info/std",
+  "serde",
+  "sp-core/std",
+  "sp-io/std",
+  "sp-std/std",
+  "sp-weights/std",
 ]
 runtime-benchmarks = [
-	"frame-support/runtime-benchmarks",
-	"mp-runtime/runtime-benchmarks",
+  "frame-support/runtime-benchmarks",
+  "mp-runtime/runtime-benchmarks",
 ]
 try-runtime = ["frame-support/try-runtime"]
-
-[[bench]]
-name = "bench"
-harness = false

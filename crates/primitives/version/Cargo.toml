@@ -14,34 +14,34 @@ readme = "README.md"
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-mp-runtime = {workspace = true}
+mp-runtime = { workspace = true }
 
-codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = ["derive"] }
+codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = [
+  "derive",
+] }
 impl-serde = { version = "0.4.0", default-features = false, optional = true }
+mp-version-proc-macro = { path = "proc-macro" }
 parity-wasm = { version = "0.45", optional = true }
-scale-info = { version = "2.5.0", default-features = false, features = ["derive"] }
+scale-info = { version = "2.5.0", default-features = false, features = [
+  "derive",
+] }
 serde = { workspace = true, features = ["derive", "alloc"], optional = true }
+sp-core-hashing-proc-macro = { workspace = true }
+sp-std = { workspace = true }
 thiserror = { workspace = true, optional = true }
-sp-core-hashing-proc-macro = {workspace = true}
-sp-std = {workspace = true}
-mp-version-proc-macro = { path = "proc-macro"}
 
 [features]
 default = ["std"]
 std = [
-	"mp-runtime/std",
-	"codec/std",
-	"impl-serde/std",
-	"parity-wasm",
-	"scale-info/std",
-	"serde/std",
-	"sp-std/std",
-	"thiserror",
+  "mp-runtime/std",
+  "codec/std",
+  "impl-serde/std",
+  "parity-wasm",
+  "scale-info/std",
+  "serde/std",
+  "sp-std/std",
+  "thiserror",
 ]
 
 # Serde support without relying on std features.
-serde = [
-	"dep:serde",
-	"impl-serde",
-	"mp-runtime/serde",
-]
+serde = ["dep:serde", "impl-serde", "mp-runtime/serde"]

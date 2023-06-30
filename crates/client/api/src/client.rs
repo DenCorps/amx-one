@@ -24,11 +24,11 @@ use std::sync::Arc;
 
 use mc_transaction_pool_api::ChainEvent;
 use mp_blockchain;
+use mp_consensus::BlockOrigin;
 use mp_runtime::generic::SignedBlock;
 use mp_runtime::traits::{Block as BlockT, NumberFor};
 use mp_runtime::Justifications;
 use sc_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
-use mp_consensus::BlockOrigin;
 use sp_core::storage::StorageKey;
 
 use crate::blockchain::Info;

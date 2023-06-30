@@ -15,33 +15,33 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 
 # Madara primitives
-mp-blockchain = { workspace = true }
-mp-runtime = { workspace = true }
+mp-blockchain = { workspace = true, default-features = true }
+mp-runtime = { workspace = true, default-features = true }
 
 # Madara client
-mc-transaction-pool-api = { workspace = true }
+mc-transaction-pool-api = { workspace = true, default-features = true }
 
 # Substrate client
-mc-client-api = { workspace = true }
-sc-utils = { workspace = true }
- # FIXME: remove completely this dependency and use mc-transaction-pool everywhere
-sc-transaction-pool = { workspace = true }
+mc-client-api = { workspace = true, default-features = true }
+sc-utils = { workspace = true, default-features = true }
+# FIXME: remove completely this dependency and use mc-transaction-pool everywhere
+sc-transaction-pool = { workspace = true, default-features = true }
 
 # Substrate primitives
-mp-api = { workspace = true }
-sp-core = { workspace = true }
-sp-tracing = { workspace = true }
-mp-transaction-pool = { workspace = true }
+mp-api = { workspace = true, default-features = true }
+mp-transaction-pool = { workspace = true, default-features = true }
+sp-core = { workspace = true, default-features = true }
+sp-tracing = { workspace = true, default-features = true }
 
 # Third party dependencies
-async-trait = { workspace = true }
-futures = { workspace = true }
-futures-timer = { workspace = true }
-linked-hash-map = { workspace = true }
-log = { workspace = true }
-num-traits = { workspace = true }
-parking_lot = { workspace = true }
-prometheus-endpoint = { workspace = true }
+async-trait = { workspace = true, default-features = true }
 codec = { workspace = true, default-features = true }
-serde = { workspace = true }
-thiserror = { workspace = true }
+futures = { workspace = true, default-features = true }
+futures-timer = { workspace = true, default-features = true }
+linked-hash-map = { workspace = true, default-features = true }
+log = { workspace = true, default-features = true }
+num-traits = { workspace = true, default-features = true }
+parking_lot = { workspace = true, default-features = true }
+prometheus-endpoint = { workspace = true, default-features = true }
+serde = { workspace = true, default-features = true }
+thiserror = { workspace = true, default-features = true }

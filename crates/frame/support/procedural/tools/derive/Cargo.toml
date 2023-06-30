@@ -15,11 +15,13 @@ targets = ["x86_64-unknown-linux-gnu"]
 proc-macro = true
 
 [dependencies]
-proc-macro2 = { workspace = true }
-quote = { workspace = true, features = ["proc-macro"] }
+proc-macro2 = { workspace = true, default-features = false }
+quote = { workspace = true, features = [
+  "proc-macro",
+], default-features = false }
 syn = { workspace = true, features = [
   "proc-macro",
   "full",
   "extra-traits",
   "parsing",
-] }
+], default-features = false }

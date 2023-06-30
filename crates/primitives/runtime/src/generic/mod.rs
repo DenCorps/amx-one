@@ -28,11 +28,9 @@ mod header;
 mod tests;
 mod unchecked_extrinsic;
 
-pub use self::{
-	block::{Block, BlockId, SignedBlock},
-	checked_extrinsic::CheckedExtrinsic,
-	digest::{Digest, DigestItem, DigestItemRef, OpaqueDigestItemId},
-	era::{Era, Phase},
-	header::Header,
-	unchecked_extrinsic::{SignedPayload, UncheckedExtrinsic},
-};
+pub use self::block::{Block, BlockId, SignedBlock};
+pub use self::checked_extrinsic::CheckedExtrinsic;
+pub use self::digest::{Digest, DigestItem, DigestItemRef, OpaqueDigestItemId};
+pub use self::era::{Era, Phase};
+pub use self::header::Header;
+pub use self::unchecked_extrinsic::{SignedPayload, UncheckedExtrinsic};

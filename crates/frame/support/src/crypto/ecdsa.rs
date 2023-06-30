@@ -19,7 +19,8 @@
 //!
 //! Provides an extension trait for [`sp_core::ecdsa::Public`] to do certain operations.
 
-use sp_core::{crypto::ByteArray, ecdsa::Public};
+use sp_core::crypto::ByteArray;
+use sp_core::ecdsa::Public;
 
 /// Extension trait for [`Public`] to be used from inside the runtime.
 ///
@@ -28,22 +29,20 @@ use sp_core::{crypto::ByteArray, ecdsa::Public};
 /// This is needed because host functions cannot be called from within
 /// `sp_core` due to cyclic dependencies  on `sp_io`.
 pub trait ECDSAExt {
-	/// Returns Ethereum address calculated from this ECDSA public key.
-	fn to_eth_address(&self) -> Result<[u8; 20], ()>;
+    /// Returns Ethereum address calculated from this ECDSA public key.
+    fn to_eth_address(&self) -> Result<[u8; 20], ()>;
 }
 
 impl ECDSAExt for Public {
-	fn to_eth_address(&self) -> Result<[u8; 20], ()> {
-		use k256::{elliptic_curve::sec1::ToEncodedPoint, PublicKey};
+    fn to_eth_address(&self) -> Result<[u8; 20], ()> {
+        use k256::elliptic_curve::sec1::ToEncodedPoint;
+        use k256::PublicKey;
 
-		PublicKey::from_sec1_bytes(self.as_slice()).map_err(drop).and_then(|pub_key| {
-			// uncompress the key
-			let uncompressed = pub_key.to_encoded_point(false);
-			// convert to ETH address
-			<[u8; 20]>::try_from(
-				sp_io::hashing::keccak_256(&uncompressed.as_bytes()[1..])[12..].as_ref(),
-			)
-			.map_err(drop)
-		})
-	}
+        PublicKey::from_sec1_bytes(self.as_slice()).map_err(drop).and_then(|pub_key| {
+            // uncompress the key
+            let uncompressed = pub_key.to_encoded_point(false);
+            // convert to ETH address
+            <[u8; 20]>::try_from(sp_io::hashing::keccak_256(&uncompressed.as_bytes()[1..])[12..].as_ref()).map_err(drop)
+        })
+    }
 }

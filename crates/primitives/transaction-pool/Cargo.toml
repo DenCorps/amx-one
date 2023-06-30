@@ -18,8 +18,5 @@ mp-api = { workspace = true }
 mp-runtime = { workspace = true }
 
 [features]
-default = [ "std" ]
-std = [
-	"mp-api/std",
-	"mp-runtime/std",
-]
+default = ["std"]
+std = ["mp-api/std", "mp-runtime/std"]

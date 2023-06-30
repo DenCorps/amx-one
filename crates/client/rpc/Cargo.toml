@@ -20,18 +20,18 @@ targets = ["x86_64-unknown-linux-gnu"]
 madara-runtime = { workspace = true, default-features = true }
 pallet-starknet = { workspace = true, default-features = true }
 # Madara client
-mc-db = { workspace = true }
-mc-rpc-core = { workspace = true }
-mc-storage = { workspace = true }
-mc-transaction-pool = { workspace = true }
+mc-db = { workspace = true, default-features = true }
+mc-rpc-core = { workspace = true, default-features = true }
+mc-storage = { workspace = true, default-features = true }
+mc-transaction-pool = { workspace = true, default-features = true }
 
 # Madara primitives
-mp-blockchain = { workspace = true, default-features = true }
-mp-starknet = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
-mp-runtime = { workspace = true, default-features = true }
+frame-support = { workspace = true, default-features = true }
+frame-system = { workspace = true, default-features = true }
 mp-api = { workspace = true, default-features = true }
+mp-blockchain = { workspace = true, default-features = true }
+mp-runtime = { workspace = true, default-features = true }
+mp-starknet = { workspace = true, default-features = true }
 
 
 # Substate primitives
@@ -39,13 +39,13 @@ sp-arithmetic = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
 # Substrate client
 mc-client-api = { workspace = true, default-features = true }
-sc-network-sync = { workspace = true }
+sc-network-sync = { workspace = true, default-features = true }
 # Starknet
 blockifier = { workspace = true, default-features = false, features = [
   "testing",
 ] }
-starknet-core = { workspace = true }
-starknet-ff = { workspace = true }
+starknet-core = { workspace = true, default-features = true }
+starknet-ff = { workspace = true, default-features = true }
 starknet_api = { workspace = true, default-features = false }
 # Others
 hex = { workspace = true, default-features = true }
@@ -55,8 +55,8 @@ jsonrpsee = { workspace = true, default-features = true, features = [
 ] }
 log = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-thiserror = { workspace = true }
+thiserror = { workspace = true, default-features = true }
 
 [dev-dependencies]
-rstest = { workspace = true }
-pretty_assertions = { workspace = true }
+rstest = { workspace = true, default-features = true }
+pretty_assertions = { workspace = true, default-features = true }

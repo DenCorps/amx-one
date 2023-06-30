@@ -9,13 +9,13 @@ repository = "https://github.com/paritytech/substrate/"
 description = "Transaction pool client facing API."
 
 [dependencies]
-async-trait = {workspace = true}
-futures = {workspace = true}
-log = {workspace = true}
-serde = { workspace = true, features = ["derive"] }
-thiserror = {workspace = true}
-mp-blockchain = {workspace = true}
-mp-runtime = {workspace = true}
+async-trait = { workspace = true, default-features = false }
+futures = { workspace = true, default-features = false }
+log = { workspace = true, default-features = false }
+mp-blockchain = { workspace = true, default-features = false }
+mp-runtime = { workspace = true, default-features = false }
+serde = { workspace = true, features = ["derive"], default-features = false }
+thiserror = { workspace = true, default-features = false }
 
 [dev-dependencies]
-serde_json = "1.0"
+serde_json = { workspace = true, default-features = false }

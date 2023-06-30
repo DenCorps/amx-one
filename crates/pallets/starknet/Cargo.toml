@@ -16,48 +16,50 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 
 # Madara primitives
-mp-digest-log = { workspace = true, default-features = false }
-mp-starknet = { workspace = true, default-features = false }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
 blockifier = { workspace = true, default-features = false, features = [
   "testing",
   "parity-scale-codec",
 ] }
+frame-support = { workspace = true, default-features = false }
+frame-system = { workspace = true, default-features = false }
+mp-digest-log = { workspace = true, default-features = false }
+mp-starknet = { workspace = true, default-features = false }
 starknet-crypto = { workspace = true, default-features = false, features = [
   "alloc",
 ] }
 starknet_api = { workspace = true, default-features = false }
 
 # Substrate frame
-frame-benchmarking = { workspace = true, optional = true }
+frame-benchmarking = { workspace = true, optional = true, default-features = false }
 
 # Substrate primitives
-mp-runtime = { workspace = true }
-mp-api = { workspace = true }
-sp-core = { workspace = true }
-sp-inherents = { workspace = true }
-sp-io = { workspace = true }
-sp-std = { workspace = true }
+mp-api = { workspace = true, default-features = false }
+mp-runtime = { workspace = true, default-features = false }
+sp-core = { workspace = true, default-features = false }
+sp-inherents = { workspace = true, default-features = false }
+sp-io = { workspace = true, default-features = false }
+sp-std = { workspace = true, default-features = false }
 # Frame pallets
 
 # Other third party dependencies
-hex = { workspace = true }
-indexmap = { workspace = true }
-log = { workspace = true }
 codec = { package = "parity-scale-codec", workspace = true, features = [
   "derive",
-] }
-scale-info = { workspace = true, features = ["derive"] }
-serde = { workspace = true, features = ["derive"] }
-serde_json = { workspace = true }
+], default-features = false }
+hex = { workspace = true, default-features = false }
+indexmap = { workspace = true, default-features = false }
+log = { workspace = true, default-features = false }
+scale-info = { workspace = true, features = [
+  "derive",
+], default-features = false }
+serde = { workspace = true, features = ["derive"], default-features = false }
+serde_json = { workspace = true, default-features = false }
 
 [dev-dependencies]
-pallet-timestamp = { workspace = true }
-pretty_assertions = { workspace = true }
-test-case = "3.1.0"
-lazy_static = "1.4.0"
-hexlit = "0.5.5"
+pallet-timestamp = { workspace = true, default-features = false }
+pretty_assertions = { workspace = true, default-features = false }
+test-case = { version = "3.1.0", default-features = false }
+lazy_static = { version = "1.4.0", default-features = false }
+hexlit = { version = "0.5.5", default-features = false }
 starknet-core = { workspace = true, default-features = false }
 
 [features]

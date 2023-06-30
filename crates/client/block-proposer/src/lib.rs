@@ -19,11 +19,11 @@ use mp_api::{ApiExt, ProvideRuntimeApi};
 use mp_blockchain::ApplyExtrinsicFailed::Validity;
 use mp_blockchain::Error::ApplyExtrinsicFailed;
 use mp_blockchain::HeaderBackend;
+use mp_consensus::{DisableProofRecording, ProofRecording, Proposal};
 use mp_runtime::traits::{Block as BlockT, Header as HeaderT};
 use mp_runtime::{Digest, Percent, SaturatedConversion};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
-use mp_consensus::{DisableProofRecording, ProofRecording, Proposal};
 use sp_core::traits::SpawnNamed;
 use sp_inherents::InherentData;
 

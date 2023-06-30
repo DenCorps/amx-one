@@ -17,8 +17,8 @@
 
 /// Interface for enumerating assets in existence or owned by a given account.
 pub trait Inspect<AccountId>: super::Inspect<AccountId> {
-	type AssetsIterator;
+    type AssetsIterator;
 
-	/// Returns an iterator of the collections in existence.
-	fn asset_ids() -> Self::AssetsIterator;
+    /// Returns an iterator of the collections in existence.
+    fn asset_ids() -> Self::AssetsIterator;
 }

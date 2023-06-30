@@ -38,15 +38,15 @@ starknet_api = { workspace = true, default-features = false }
 
 # Other third party dependencies
 bitvec = { workspace = true, features = ["alloc"] }
-derive_more = { workspace = true, features = ["constructor"] }
-flate2 = { workspace = true, optional = true }
-hex = { version = "0.4.3", default-features = false }
-lazy_static = { workspace = true }
 codec = { package = "parity-scale-codec", workspace = true, features = [
   "derive",
   "max-encoded-len",
   "bit-vec",
 ] }
+derive_more = { workspace = true, features = ["constructor"] }
+flate2 = { workspace = true, optional = true }
+hex = { version = "0.4.3", default-features = false }
+lazy_static = { workspace = true }
 scale-info = { workspace = true, features = ["derive", "bit-vec", "decode"] }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { version = "1.0.99", default-features = false }

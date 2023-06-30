@@ -12,18 +12,20 @@ repository = "https://github.com/paritytech/substrate/"
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-mp-api = { version = "4.0.0-dev", path = "../" }
-substrate-test-runtime-client = { version = "2.0.0", path = "../../../test-utils/runtime/client" }
-mp-version = { version = "5.0.0", path = "../../version" }
-sp-tracing = { version = "6.0.0", path = "../../tracing" }
-mp-runtime = { version = "7.0.0", path = "../../runtime" }
-sp-consensus = { version = "0.10.0-dev", path = "../../consensus/common" }
-mc-block-builder = { version = "0.10.0-dev", path = "../../../client/block-builder" }
 codec = { package = "parity-scale-codec", version = "3.2.2" }
-sp-state-machine = { version = "0.13.0", path = "../../state-machine" }
-trybuild = "1.0.74"
+mc-block-builder = { version = "0.10.0-dev", path = "../../../client/block-builder" }
+mp-api = { version = "4.0.0-dev", path = "../" }
+mp-runtime = { version = "7.0.0", path = "../../runtime" }
+mp-version = { version = "5.0.0", path = "../../version" }
 rustversion = "1.0.6"
-scale-info = { version = "2.5.0", default-features = false, features = ["derive"] }
+scale-info = { version = "2.5.0", default-features = false, features = [
+  "derive",
+] }
+sp-consensus = { version = "0.10.0-dev", path = "../../consensus/common" }
+sp-state-machine = { version = "0.13.0", path = "../../state-machine" }
+sp-tracing = { version = "6.0.0", path = "../../tracing" }
+substrate-test-runtime-client = { version = "2.0.0", path = "../../../test-utils/runtime/client" }
+trybuild = "1.0.74"
 
 [dev-dependencies]
 criterion = "0.4.0"
@@ -37,5 +39,5 @@ harness = false
 
 # We only need this to generate the correct code.
 [features]
-default = [ "std" ]
+default = ["std"]
 std = []

@@ -15,25 +15,25 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 # Madara primitives
 frame-support-procedural = { version = "4.0.0-dev", default-features = false, path = "./procedural" }
-mp-runtime = { workspace = true }
+mp-runtime = { workspace = true, default-features = false }
 
 # Substrate primitives
 frame-metadata = { version = "15.1.0", default-features = false, features = [
   "v14",
   "v15-unstable",
 ] }
-mp-api = { workspace = true }
-sp-arithmetic = { workspace = true }
-sp-core = { workspace = true }
-sp-core-hashing-proc-macro = { workspace = true }
-sp-debug-derive = { workspace = true }
-sp-inherents = { workspace = true }
-sp-io = { workspace = true }
-sp-staking = { workspace = true }
-sp-state-machine = { workspace = true }
-sp-std = { workspace = true }
-sp-tracing = { workspace = true }
-sp-weights = { workspace = true }
+mp-api = { workspace = true, default-features = false }
+sp-arithmetic = { workspace = true, default-features = false }
+sp-core = { workspace = true, default-features = false }
+sp-core-hashing-proc-macro = { workspace = true, default-features = false }
+sp-debug-derive = { workspace = true, default-features = false }
+sp-inherents = { workspace = true, default-features = false }
+sp-io = { workspace = true, default-features = false }
+sp-staking = { workspace = true, default-features = false }
+sp-state-machine = { workspace = true, default-features = false }
+sp-std = { workspace = true, default-features = false }
+sp-tracing = { workspace = true, default-features = false }
+sp-weights = { workspace = true, default-features = false }
 
 # Third party dependencies
 codec = { package = "parity-scale-codec", version = "3.2.2", default-features = false, features = [
@@ -43,17 +43,19 @@ codec = { package = "parity-scale-codec", version = "3.2.2", default-features = 
 scale-info = { workspace = true, default-features = false, features = [
   "derive",
 ] }
-serde = { workspace = true, optional = true, features = ["derive"] }
+serde = { workspace = true, optional = true, features = [
+  "derive",
+], default-features = false }
 
-bitflags = { workspace = true }
-environmental = { workspace = true }
-impl-trait-for-tuples = { workspace = true }
+bitflags = { workspace = true, default-features = false }
+environmental = { workspace = true, default-features = false }
+impl-trait-for-tuples = { workspace = true, default-features = false }
 k256 = { workspace = true, default-features = false, features = ["ecdsa"] }
-log = { workspace = true }
-once_cell = { workspace = true, optional = true }
-paste = { workspace = true }
-smallvec = { workspace = true }
-tt-call = { workspace = true }
+log = { workspace = true, default-features = false }
+once_cell = { workspace = true, optional = true, default-features = false }
+paste = { workspace = true, default-features = false }
+smallvec = { workspace = true, default-features = false }
+tt-call = { workspace = true, default-features = false }
 
 [dev-dependencies]
 serde_json = { workspace = true }

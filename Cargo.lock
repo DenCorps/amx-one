@@ -6982,6 +6982,8 @@ version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "de1bb486a691878cd320c2f0d319ba91eeaa2e894066d8b5f8f117c000e9d962"
 dependencies = [
+ "futures",
+ "futures-timer",
  "rstest_macros",
  "rustc_version",
 ]
@@ -9536,6 +9538,7 @@ dependencies = [
  "crypto-bigint 0.5.2",
  "getrandom 0.2.10",
  "hex",
+ "num-bigint",
  "serde",
 ]
 

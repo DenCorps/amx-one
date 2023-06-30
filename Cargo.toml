@@ -58,7 +58,7 @@ sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "polkad
 sp-application-crypto = { version = "7.0.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 sp-weights = { version = "4.0.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 sp-externalities = { version = "0.13.0", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
-sp-keystore = { version = "0.13.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43"}
+sp-keystore = { version = "0.13.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 sp-statement-store = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-debug-derive = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-staking = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
@@ -87,7 +87,7 @@ sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "polka
 sc-consensus-aura = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sc-proposer-metrics = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sc-utils = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
- # FIXME: remove completely this dependency and use mc-transaction-pool everywhere
+# FIXME: remove completely this dependency and use mc-transaction-pool everywhere
 sc-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 
 # Substrate build & tools dependencies
@@ -96,7 +96,7 @@ substrate-wasm-builder = { git = "https://github.com/paritytech/substrate", bran
 prometheus-endpoint = { package = "substrate-prometheus-endpoint", version = "0.10.0-dev", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-test-primitives = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 substrate-test-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
-substrate-test-runtime-client= { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
+substrate-test-runtime-client = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 # Substrate Frame pallet
 pallet-aura = { default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 pallet-grandpa = { default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
@@ -184,7 +184,9 @@ num-traits = { version = "0.2.8", default-features = false }
 lru = { version = "0.8.1", default-features = false }
 fnv = { version = "1.0.6", default-features = false }
 proc-macro2 = { version = "1.0.56", default-features = false }
-quote = { version = "1.0.26", features = ["proc-macro"], default-features = false }
+quote = { version = "1.0.26", features = [
+  "proc-macro",
+], default-features = false }
 syn = { version = "2.0.16", features = [
   "full",
   "proc-macro",

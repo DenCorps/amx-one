@@ -20,10 +20,10 @@
 
 use std::collections::HashSet;
 
+use mp_consensus::BlockOrigin;
 use mp_runtime::traits::{Block as BlockT, HashFor, NumberFor};
 use mp_runtime::{Justification, Justifications, StateVersion, Storage};
 use parking_lot::RwLock;
-use mp_consensus::BlockOrigin;
 use sp_core::offchain::OffchainStorage;
 use sp_state_machine::backend::AsTrieBackend;
 pub use sp_state_machine::{Backend as StateBackend, KeyValueStates};

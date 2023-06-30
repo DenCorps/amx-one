@@ -15,20 +15,18 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 # Madara primitives
-mp-runtime = { workspace = true,default-features = false}
-mp-consensus = { workspace = true,default-features = false }
+mp-consensus = { workspace = true, default-features = false }
+mp-runtime = { workspace = true, default-features = false }
 
 # Substrate primitivemp-api = { workspace = true }
-mp-api = { workspace = true,default-features = false }
-sp-database = { workspace = true,default-features = false}
-sp-state-machine = { workspace = true,default-features = false }
+mp-api = { workspace = true, default-features = false }
+sp-database = { workspace = true, default-features = false }
+sp-state-machine = { workspace = true, default-features = false }
 
 # Third-party dependencies
-futures = { workspace = true,default-features = false }
-log = { workspace = true,default-features = false }
-lru = { workspace = true,default-features = false }
-parking_lot = { workspace = true,default-features = false }
-codec = { workspace = true, default-features = false, features = [
-  "derive",
-] }
-thiserror = { workspace = true,default-features = false }
+codec = { workspace = true, default-features = false, features = ["derive"] }
+futures = { workspace = true, default-features = false }
+log = { workspace = true, default-features = false }
+lru = { workspace = true, default-features = false }
+parking_lot = { workspace = true, default-features = false }
+thiserror = { workspace = true, default-features = false }

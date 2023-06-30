@@ -29,12 +29,7 @@ pub mod roles;
 
 pub use enumerable::Inspect as InspectEnumerable;
 pub use freeze::{Inspect as InspectFreeze, Mutate as MutateFreeze};
-pub use hold::{
-	Balanced as BalancedHold, Inspect as InspectHold, Mutate as MutateHold,
-	Unbalanced as UnbalancedHold,
-};
+pub use hold::{Balanced as BalancedHold, Inspect as InspectHold, Mutate as MutateHold, Unbalanced as UnbalancedHold};
 pub use imbalance::{Credit, Debt, HandleImbalanceDrop, Imbalance};
 pub use lifetime::{Create, Destroy};
-pub use regular::{
-	Balanced, DecreaseIssuance, Dust, IncreaseIssuance, Inspect, Mutate, Unbalanced,
-};
+pub use regular::{Balanced, DecreaseIssuance, Dust, IncreaseIssuance, Inspect, Mutate, Unbalanced};

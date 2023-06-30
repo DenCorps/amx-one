@@ -39,13 +39,13 @@ use std::collections::HashSet;
 use std::fmt;
 
 use codec::{Decode, Encode, Input};
-use scale_info::TypeInfo;
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
 #[cfg(feature = "std")]
 use mp_runtime::traits::Block as BlockT;
 use mp_runtime::RuntimeString;
 pub use mp_runtime::{create_runtime_str, StateVersion};
+use scale_info::TypeInfo;
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 #[doc(hidden)]
 pub use sp_std;
 
