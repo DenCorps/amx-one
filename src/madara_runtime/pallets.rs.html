@@ -162,11 +162,13 @@
 <a href="#162" id="162">162</a>
 <a href="#163" id="163">163</a>
 <a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Configuration of the pallets used in the runtime.
 //! The pallets used in the runtime are configured here.
 //! This file is used to generate the `construct_runtime!` macro.
 </span><span class="kw">pub use </span>frame_support::traits::{
-    ConstU128, ConstU32, ConstU64, ConstU8, KeyOwnerProofSystem, OnTimestampSet, Randomness, StorageInfo,
+    ConstBool, ConstU128, ConstU32, ConstU64, ConstU8, KeyOwnerProofSystem, OnTimestampSet, Randomness, StorageInfo,
 };
 <span class="kw">pub use </span>frame_support::weights::constants::{
     BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_REF_TIME_PER_SECOND,
@@ -196,13 +198,14 @@
 </span><span class="doccomment">/// Configure the Starknet pallet in pallets/starknet.
 </span><span class="kw">impl </span>pallet_starknet::Config <span class="kw">for </span>Runtime {
     <span class="kw">type </span>RuntimeEvent = RuntimeEvent;
-    <span class="kw">type </span>StateRoot = pallet_starknet::state_root::IntermediateStateRoot&lt;<span class="self">Self</span>&gt;;
     <span class="kw">type </span>SystemHash = mp_starknet::crypto::hash::pedersen::PedersenHasher;
     <span class="kw">type </span>TimestampProvider = Timestamp;
     <span class="kw">type </span>UnsignedPriority = UnsignedPriority;
     <span class="kw">type </span>TransactionLongevity = TransactionLongevity;
+    <span class="kw">type </span>EnableStateRoot = ConstBool&lt;<span class="bool-val">false</span>&gt;;
     <span class="kw">type </span>InvokeTxMaxNSteps = InvokeTxMaxNSteps;
     <span class="kw">type </span>ValidateMaxNSteps = ValidateMaxNSteps;
+    <span class="kw">type </span>ProtocolVersion = ProtocolVersion;
 }
 
 <span class="doccomment">/// --------------------------------------
@@ -313,6 +316,7 @@
     <span class="kw">pub const </span>TransactionLongevity: u64 = u64::MAX;
     <span class="kw">pub const </span>InvokeTxMaxNSteps: u32 = <span class="number">1_000_000</span>;
     <span class="kw">pub const </span>ValidateMaxNSteps: u32 = <span class="number">1_000_000</span>;
+    <span class="kw">pub const </span>ProtocolVersion: u8 = <span class="number">0</span>;
 }
 
 <span class="doccomment">/// Implement the OnTimestampSet trait to override the default Aura.
