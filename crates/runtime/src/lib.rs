@@ -28,7 +28,6 @@ pub use frame_support::{construct_runtime, parameter_types, StorageValue};
 pub use frame_system::Call as SystemCall;
 use frame_system::EventRecord;
 use mp_api::impl_runtime_apis;
-use mp_consensus_aura::sr25519::AuthorityId as AuraId;
 use mp_runtime::traits::{BlakeTwo256, Block as BlockT, NumberFor};
 use mp_runtime::transaction_validity::{TransactionSource, TransactionValidity};
 #[cfg(any(feature = "std", test))]
@@ -48,6 +47,7 @@ use pallet_starknet::types::NonceWrapper;
 use pallet_starknet::Call::{declare, deploy_account, invoke};
 use pallet_starknet::Event;
 pub use pallet_timestamp::Call as TimestampCall;
+use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::crypto::KeyTypeId;
 use sp_core::OpaqueMetadata;
 use sp_std::prelude::*;
@@ -176,9 +176,9 @@ impl_runtime_apis! {
         }
     }
 
-    impl mp_consensus_aura::AuraApi<Block, AuraId> for Runtime {
-        fn slot_duration() -> mp_consensus_aura::SlotDuration {
-            mp_consensus_aura::SlotDuration::from_millis(Aura::slot_duration())
+    impl sp_consensus_aura::AuraApi<Block, AuraId> for Runtime {
+        fn slot_duration() -> sp_consensus_aura::SlotDuration {
+            sp_consensus_aura::SlotDuration::from_millis(Aura::slot_duration())
         }
 
         fn authorities() -> Vec<AuraId> {

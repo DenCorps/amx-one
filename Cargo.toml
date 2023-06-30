@@ -57,7 +57,7 @@ sp-trie = { version = "7.0.0", git = "https://github.com/paritytech/substrate", 
 sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-application-crypto = { version = "7.0.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 sp-weights = { version = "4.0.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
-sp-externalities = { version = "0.13.0", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
+sp-externalities = { version = "0.13.0", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-keystore = { version = "0.13.0", default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43" }
 sp-statement-store = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }
 sp-debug-derive = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.43", default-features = false }

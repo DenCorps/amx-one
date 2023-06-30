@@ -16,7 +16,6 @@ use mc_storage::overrides_handle;
 use mc_transaction_pool::FullPool;
 use mp_api::offchain::OffchainStorage;
 use mp_api::{ConstructRuntimeApi, ProvideRuntimeApi, TransactionFor};
-use mp_consensus_aura::sr25519::AuthorityPair as AuraPair;
 use mp_runtime::traits::BlakeTwo256;
 use mp_starknet::sequencer_address::{
     InherentDataProvider as SeqAddrInherentDataProvider, DEFAULT_SEQUENCER_ADDRESS, SEQ_ADDR_STORAGE_KEY,
@@ -30,6 +29,7 @@ pub use sc_executor::NativeElseWasmExecutor;
 use sc_service::error::Error as ServiceError;
 use sc_service::{Configuration, TaskManager, WarpSyncParams};
 use sc_telemetry::{Telemetry, TelemetryHandle, TelemetryWorker};
+use sp_consensus_aura::sr25519::AuthorityPair as AuraPair;
 use sp_offchain::STORAGE_PREFIX;
 use sp_trie::PrefixedMemoryDB;
 
@@ -177,7 +177,7 @@ where
 
     let create_inherent_data_providers = move |_, ()| async move {
         let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
-        let slot = mp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+        let slot = sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
             *timestamp,
             slot_duration,
         );
@@ -390,7 +390,7 @@ pub fn new_full(config: Configuration, sealing: Option<Sealing>) -> Result<TaskM
                 async move {
                     let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
 
-                    let slot = mp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+                    let slot = sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
                         *timestamp,
                         slot_duration,
                     );

@@ -1,11 +1,11 @@
 use blockifier::execution::contract_class::ContractClass;
 use madara_runtime::{AuraConfig, EnableManualSeal, GenesisConfig, GrandpaConfig, SystemConfig, WASM_BINARY};
-use mp_consensus_aura::sr25519::AuthorityId as AuraId;
 use mp_consensus_grandpa::AuthorityId as GrandpaId;
 use mp_starknet::execution::types::Felt252Wrapper;
 use pallet_starknet::types::ContractStorageKeyWrapper;
 use sc_service::ChainType;
 use serde::{Deserialize, Serialize};
+use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::storage::Storage;
 use sp_core::{Pair, Public, H256};
 use sp_state_machine::BasicExternalities;

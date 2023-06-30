@@ -382,7 +382,7 @@ export default {
       },
     },
   },
-  /** Lookup73: mp_consensus_aura::sr25519::app_sr25519::Public */
+  /** Lookup73: sp_consensus_aura::sr25519::app_sr25519::Public */
   SpConsensusAuraSr25519AppSr25519Public: "SpCoreSr25519Public",
   /** Lookup74: sp_core::sr25519::Public */
   SpCoreSr25519Public: "[u8;32]",

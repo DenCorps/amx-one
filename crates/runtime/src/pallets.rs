@@ -10,7 +10,6 @@ pub use frame_support::weights::constants::{
 pub use frame_support::weights::{IdentityFee, Weight};
 pub use frame_support::{construct_runtime, parameter_types, StorageValue};
 pub use frame_system::Call as SystemCall;
-use mp_consensus_aura::sr25519::AuthorityId as AuraId;
 use mp_runtime::generic;
 use mp_runtime::traits::{AccountIdLookup, BlakeTwo256};
 #[cfg(any(feature = "std", test))]
@@ -19,6 +18,7 @@ pub use mp_runtime::{Perbill, Permill};
 /// Import the StarkNet pallet.
 pub use pallet_starknet;
 pub use pallet_timestamp::Call as TimestampCall;
+use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_std::marker::PhantomData;
 
 use crate::*;

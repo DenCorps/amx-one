@@ -37,5 +37,5 @@ sp-core = { workspace = true, default-features = true }
 
 # Third party dependencies
 futures = { workspace = true, default-features = true }
-futures-timer = { workspace = "3.0.2", default-features = true }
+futures-timer = { workspace = true, default-features = true }
 log = { workspace = true, default-features = true }
