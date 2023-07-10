@@ -356,16 +356,31 @@
 <a href="#356" id="356">356</a>
 <a href="#357" id="357">357</a>
 <a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
 </pre><pre class="rust"><code><span class="kw">use </span>alloc::vec;
 <span class="kw">use </span>alloc::vec::Vec;
 
-<span class="kw">use </span>bitvec::prelude::Msb0;
-<span class="kw">use </span>bitvec::slice::BitSlice;
 <span class="kw">use </span>bitvec::vec::BitVec;
 <span class="kw">use </span>starknet_crypto::FieldElement;
 
 <span class="kw">use </span><span class="kw">super</span>::hash::pedersen::PedersenHasher;
-<span class="kw">use </span><span class="kw">super</span>::merkle_patricia_tree::merkle_tree::{MerkleTree, ProofNode};
+<span class="kw">use </span><span class="kw">super</span>::merkle_patricia_tree::merkle_tree::{MerkleTree, NodesMapping, ProofNode};
 <span class="kw">use </span><span class="kw">super</span>::merkle_patricia_tree::ref_merkle_tree::RefMerkleTree;
 <span class="kw">use </span><span class="kw">crate</span>::execution::types::Felt252Wrapper;
 <span class="kw">use </span><span class="kw">crate</span>::traits::hash::HasherT;
@@ -378,7 +393,7 @@
 
 <span class="doccomment">/// A Patricia Merkle tree with height 64 used to compute transaction and event commitments.
 ///
-/// According to the [documentation](https://docs.starknet.io/docs/Blocks/header/#block-header)
+/// According to the [documentation](https://docs.starknet.io/documentation/architecture_and_concepts/Blocks/header/)
 /// the commitment trees are of height 64, because the key used is the 64 bit representation
 /// of the index of the transaction / event within the block.
 ///
@@ -406,14 +421,14 @@
     }
 
     <span class="doccomment">/// Get the merkle root of the tree.
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; Felt252Wrapper {
+    </span><span class="kw">pub fn </span>commit(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; Felt252Wrapper {
         <span class="self">self</span>.tree.commit()
     }
 }
 
-<span class="doccomment">/// A Patricia Merkle tree with height 251 used to compute transaction and event commitments.
+<span class="doccomment">/// A Patricia Merkle tree with height 251 used to compute contract and class tree commitments.
 ///
-/// According to the [documentation](https://docs.starknet.io/docs/Blocks/header/#block-header)
+/// According to the [documentation](https://docs.starknet.io/documentation/architecture_and_concepts/State/starknet-state/)
 /// the commitment trees are of height 251, because the key used is a Field Element.
 ///
 /// The tree height is 251 in our case since our set operation takes Fieldelement index values.
@@ -445,10 +460,29 @@
         <span class="self">self</span>.tree.commit()
     }
 
-    <span class="attr">#[allow(dead_code)]
-    </span><span class="doccomment">/// Generates a proof for `key`. See [`MerkleTree::get_proof`].
-    </span><span class="kw">pub fn </span>get_proof(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>BitSlice&lt;u8, Msb0&gt;) -&gt; Vec&lt;ProofNode&gt; {
-        <span class="self">self</span>.tree.get_proof(key)
+    <span class="doccomment">/// Generates a proof for `key`. See [`MerkleTree::get_proof`].
+    </span><span class="kw">pub fn </span>get_proof(<span class="kw-2">&amp;</span><span class="self">self</span>, key: Felt252Wrapper) -&gt; Vec&lt;ProofNode&gt; {
+        <span class="kw">let </span>key = <span class="kw-2">&amp;</span>key.<span class="number">0</span>.to_bytes_be()[..<span class="number">31</span>];
+        <span class="self">self</span>.tree.get_proof(<span class="kw-2">&amp;</span>BitVec::from_vec(key.to_vec()))
+    }
+
+    <span class="doccomment">/// Returns a leaf of the tree stored at key `key`
+    ///
+    /// # Arguments
+    ///
+    /// * `key` - The key of the value to retrieve.
+    ///
+    /// # Returns
+    ///
+    /// `Some(value)` - Value stored at the given key.
+    </span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, key: Felt252Wrapper) -&gt; <span class="prelude-ty">Option</span>&lt;Felt252Wrapper&gt; {
+        <span class="kw">let </span>key = <span class="kw-2">&amp;</span>key.<span class="number">0</span>.to_bytes_be()[..<span class="number">31</span>];
+        <span class="self">self</span>.tree.get(<span class="kw-2">&amp;</span>BitVec::from_vec(key.to_vec()))
+    }
+
+    <span class="doccomment">/// Returns the tree&#39;s nodes
+    </span><span class="kw">pub fn </span>nodes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NodesMapping {
+        NodesMapping(<span class="self">self</span>.tree.nodes())
     }
 }
 
@@ -701,7 +735,7 @@
 
 <span class="doccomment">/// Calculate the hash of an event.
 ///
-/// See the [documentation](https://docs.starknet.io/docs/Events/starknet-events#event-hash)
+/// See the [documentation](https://docs.starknet.io/documentation/architecture_and_concepts/Events/starknet-events/#event_hash)
 /// for details.
 </span><span class="kw">pub fn </span>calculate_event_hash&lt;T: HasherT&gt;(event: <span class="kw-2">&amp;</span>EventWrapper) -&gt; FieldElement {
     <span class="kw">let </span>hasher = T::default();
